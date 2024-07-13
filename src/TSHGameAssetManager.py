@@ -561,7 +561,7 @@ class TSHGameAssetManager(QObject):
             for c in self.characters.keys():
                 item = QStandardItem()
                 item.setData(c, Qt.ItemDataRole.EditRole)
-                print(c)
+                #print(c)
                 item.setIcon(
                     QIcon(QPixmap.fromImage(self.stockIcons[c][0]))
                 )
