@@ -372,7 +372,7 @@ class StartGGDataProvider(TournamentDataProvider):
                                 finalResult["entrants"][t][p]["mains"] = player["mains"]
                                 finalResult["has_selection_data"] = True
                             except:
-                                logger.debug(traceback.format_exc())
+                                logger.error("Unable to capture selection data for set (Potentially offline set?)")
 
         except Exception as e:
             logger.error(traceback.format_exc())
@@ -678,7 +678,7 @@ class StartGGDataProvider(TournamentDataProvider):
                                 playerData["country_code"], user.get("location").get("city"))
                             if stateCode:
                                 playerData["state_code"] = stateCode
-
+                        if user.get("location").get("city"): playerData["city"] = user.get("location").get("city")
                     if playerData.get("startggMain"):
                         main = TSHGameAssetManager.instance.GetCharacterFromStartGGId(
                             playerData.get("startggMain"))
