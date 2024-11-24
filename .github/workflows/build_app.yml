@@ -39,8 +39,8 @@ jobs:
           chcp 65001
           set PYTHONIOENCODING=utf-8
           python scripts/gen_contributors.py
-          pyinstaller --hidden-import=loguru --hidden-import=engineio.async_drivers.threading main.py --onefile -w --icon assets\icons\Hammer.ico
-          copy dist\main.exe Voidscape.exe
+          pyinstaller --noconfirm dependencies/tsh.spec
+          copy dist\TSH.exe Voidscape.exe
 
       - run: git pull
       - name: commit files

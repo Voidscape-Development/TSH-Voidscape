@@ -85,6 +85,8 @@ class StateManager:
         try:
             with open("./out/program_state.json", 'rb') as file:
                 StateManager.state = orjson.loads(file.read())
+        except FileNotFoundError:
+            pass
         except Exception as e:
             logger.error(traceback.format_exc())
             StateManager.state = {}

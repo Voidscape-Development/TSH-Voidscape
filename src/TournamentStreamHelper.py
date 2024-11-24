@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from .Helpers.TSHLocaleHelper import TSHLocaleHelper
+from .Helpers.TSHDirHelper import TSHResolve
 import shutil
-import tarfile
+import zipfile
 import qdarktheme
 import requests
 import urllib
@@ -194,28 +195,33 @@ def UpdateProcedure():
 def ExtractUpdate():
     try:
         updateLog = []
-        tar = tarfile.open("update.tar.gz")
+        with zipfile.ZipFile("update.zip", "r") as z:
+            # backup exe
+            os.rename("./TSH.exe", "./TSH_old.exe")
 
-        # backup exe
-        os.rename("./TSH.exe", "./TSH_old.exe")
+            for filename in z.namelist():
+                if "/" in filename:
+                    fullname = filename.split("/", 1)[1]
+                    if fullname.endswith("/"):
+                        updateLog.append(f"Create directory {fullname}")
+                        try:
+                            os.makedirs(os.path.dirname(fullname), exist_ok=True)
+                        except Exception:
+                            updateLog.append(f"Failed to create {filename} - {traceback.format_exc()}")
+                    else:
+                        updateLog.append(f"Extract {filename} -> {fullname}")
+                        try:
+                            z.extract(filename, path=os.path.dirname(fullname))
+                        except Exception:
+                            updateLog.append(f"Failed to extract {filename} - {traceback.format_exc()}")
 
-        for m in tar.getmembers():
-            if "/" in m.name:
-                m.name = m.name.split("/", 1)[1]
-                try:
-                    tar.extract(m)
-                    updateLog.append(f"Extract {m}")
-                except Exception:
-                    updateLog.append(f"Failed to extract {m} - {traceback.format_exc()}")
+            try:
+                with open("assets/update_log.txt", "w") as f:
+                    f.writelines(updateLog)
+            except:
+                logger.error(traceback.format_exc())
 
-        try:
-            with open("assets/update_log.txt", "w") as f:
-                f.writelines(updateLog)
-        except:
-            logger.error(traceback.format_exc())
-
-        tar.close()
-        os.remove("update.tar.gz")
+        os.remove("update.zip")
     except Exception as e:
         logger.error(traceback.format_exc())
 
@@ -283,7 +289,7 @@ class Window(QMainWindow):
 
         try:
             version = json.load(
-                open('./assets/versions.json', encoding='utf-8')).get("program", "?")
+                open(TSHResolve('./assets/versions.json'), encoding='utf-8')).get("program", "?")
         except Exception as e:
             version = "?"
 
@@ -763,8 +769,9 @@ class Window(QMainWindow):
     def closeEvent(self, event):
         self.qtSettings.setValue("geometry", self.saveGeometry())
         self.qtSettings.setValue("windowState", self.saveState())
-        if os.path.isdir("./tmp"):
-            shutil.rmtree("./tmp")
+        tmpDir = TSHResolve("tmp")
+        if os.path.isdir(tmpDir):
+            shutil.rmtree(tmpDir)
 
     def ReloadGames(self):
         logger.info("Reload games")
