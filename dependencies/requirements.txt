@@ -1,8 +1,8 @@
-chardet==5.1.0
-charset-normalizer==2.1.0
+chardet
+charset-normalizer==3.4.1
 qtpy
-requests==2.28.1
-py7zr==0.19.0
+requests==2.29.0
+py7zr==0.22.0
 deepdiff==7.0.1
 pyqtdarktheme-fork
 Pillow
