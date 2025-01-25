@@ -11,7 +11,7 @@ flask-cors
 asyncio
 python-dateutil==2.9.0
 pynput==1.7.7
-pyside6==6.8.1
+pyside6==6.7.0
 cloudscraper==1.2.71
 loguru==0.7.3
 flask-socketio
@@ -19,6 +19,6 @@ simple_websocket
 atproto==0.0.56
 termcolor==2.5.0
 orjson==3.10.13
-msgpack==1.0.7
-qasync==0.26.0
+msgpack==1.1.0
+qasync==0.27.1
 tzdata
