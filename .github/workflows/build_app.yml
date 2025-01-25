@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Generate Windows Release
+    name: Generate Windows Release with Locale Files
     runs-on: ${{ matrix.os }}
     if: ${{ github.ref == 'refs/heads/main' || startsWith( github.ref, 'refs/heads/feature/' ) || startsWith( github.ref, 'refs/heads/fix/' ) }}
     strategy:
@@ -23,8 +23,10 @@ jobs:
         os: ["windows-latest"]
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
@@ -33,24 +35,32 @@ jobs:
         run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
         id: extract_branch
 
-      - run: pip install -r dependencies/requirements.txt pyinstaller
-      - run: |
+      - name: Install Python dependencies
+        run: pip install -r .\dependencies\requirements.txt pyinstaller
+
+      - name: Generate locale files
+        run: |
+          pyside6-lrelease -version
+          python3 .\src\i18n\gen_translation_files.py
+          python3 .\src\i18n\gen_translation_binaries.py
+
+      - name: Generate TSH Windows executable
+        run: |
           set PYTHONUTF8=1
           chcp 65001
           set PYTHONIOENCODING=utf-8
-          python scripts/gen_contributors.py
-          pyinstaller --noconfirm dependencies/tsh.spec
+          python .\scripts\gen_contributors.py
+          pyinstaller --noconfirm .\dependencies\tsh.spec
           copy dist\TSH.exe Voidscape.exe
 
-      - run: git pull
-      - name: commit files
+      - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add Voidscape.exe
           git commit -m "Update EXE" -a
 
-      - name: push changes
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -94,7 +94,19 @@ class TSHGameAssetManager(QObject):
                                   "/base_files/config.json", "rb") as f:
                             self.parent().games[game] = orjson.loads(f.read())
 
-                        if os.path.isfile("./user_data/games/"+game+"/base_files/logo.png"):
+                        # Try logo_small, if it doesn't exist use logo
+                        if os.path.isfile("./user_data/games/"+game+"/base_files/logo_small.png"):
+                            self.parent().games[game]["logo"] = QIcon(
+                                QPixmap(
+                                    QImage("./user_data/games/"+game+"/base_files/logo_small.png").scaled(
+                                        64,
+                                        64,
+                                        Qt.AspectRatioMode.KeepAspectRatio,
+                                        Qt.TransformationMode.SmoothTransformation
+                                    )
+                                )
+                            )
+                        elif os.path.isfile("./user_data/games/"+game+"/base_files/logo.png"):
                             self.parent().games[game]["logo"] = QIcon(
                                 QPixmap(
                                     QImage("./user_data/games/"+game+"/base_files/logo.png").scaled(
@@ -158,15 +170,16 @@ class TSHGameAssetManager(QObject):
                 alternates_ids = []
                 for alternate in alternates:
                     if alternate.get("smashgg_game_id"):
-                        alternates_ids.append(str(alternate.get("smashgg_game_id")))
+                        alternates_ids.append(
+                            str(alternate.get("smashgg_game_id")))
                 result = str(id) in alternates_ids
-            return(result)
-    
+            return (result)
+
         if len(self.games.keys()) == 0:
             return
 
         for i, game in enumerate(self.games.values()):
-            if detect_smashgg_id_match(game,gameid):
+            if detect_smashgg_id_match(game, gameid):
                 self.LoadGameAssets(i+1)
                 break
 
@@ -178,15 +191,16 @@ class TSHGameAssetManager(QObject):
                 alternates_ids = []
                 for alternate in alternates:
                     if alternate.get("challonge_game_id"):
-                        alternates_ids.append(str(alternate.get("smashgg_game_id")))
+                        alternates_ids.append(
+                            str(alternate.get("challonge_game_id")))
                 result = str(id) in alternates_ids
-            return(result)
-        
+            return (result)
+
         if len(self.games.keys()) == 0:
             return
 
         for i, game in enumerate(self.games.values()):
-            if detect_challonge_id_match(game,gameid):
+            if detect_challonge_id_match(game, gameid):
                 self.LoadGameAssets(i+1)
                 break
 
@@ -308,24 +322,6 @@ class TSHGameAssetManager(QObject):
 
                                     packSkinMask[c][assetsKey].add(number)
 
-                                    # Get image dimensions
-                                    imgfile = QImageReader(
-                                        './user_data/games/'+game+'/'+assetsKey+'/'+f)
-
-                                    size = imgfile.size()
-
-                                    if not assetsKey in widths:
-                                        widths[assetsKey] = []
-
-                                    if size.width() != -1:
-                                        widths[assetsKey].append(size.width())
-
-                                    if not assetsKey in heights:
-                                        heights[assetsKey] = []
-
-                                    if size.height() != -1:
-                                        heights[assetsKey].append(
-                                            size.height())
                             logger.info("Character "+c+" has " +
                                         str(len(self.parent().skins[c]))+" skins")
 
@@ -334,10 +330,7 @@ class TSHGameAssetManager(QObject):
                             if assetsKey != "base_files" and assetsKey != "stage_icon":
                                 try:
                                     if len(widths.get(assetsKey, [])) > 0 and len(heights.get(assetsKey, [])) > 0:
-                                        gameObj["assets"][assetsKey]["average_size"] = {
-                                            "x": sum(widths[assetsKey])/len(widths[assetsKey]),
-                                            "y": sum(heights[assetsKey])/len(heights[assetsKey])
-                                        }
+                                        gameObj["assets"][assetsKey]["average_size"] = assetsObj.get("average_size")
                                 except:
                                     logger.error(traceback.format_exc())
 
@@ -436,7 +429,6 @@ class TSHGameAssetManager(QObject):
                         except:
                             logger.error(traceback.format_exc())
 
-                    
                     StateManager.Set(f"game", {
                         "name": self.parent().selectedGame.get("name"),
                         "smashgg_id": self.parent().selectedGame.get("smashgg_game_id"),
