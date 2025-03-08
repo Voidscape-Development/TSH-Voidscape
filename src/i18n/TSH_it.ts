@@ -782,8 +782,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TSHScoreboardManager.py" line="59"/>
-        <location filename="../TSHScoreboardManager.py" line="88"/>
+        <location filename="../TSHScoreboardManager.py" line="54"/>
+        <location filename="../TSHScoreboardManager.py" line="79"/>
         <source>Scoreboard</source>
         <translation>Tabellone</translation>
     </message>
@@ -1263,7 +1263,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TSHScoreboardWidget.py" line="188"/>
         <source>Generate Thumbnail</source>
         <translation>Generare la miniatura</translation>
     </message>

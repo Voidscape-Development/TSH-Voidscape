@@ -765,8 +765,8 @@ p, li { white-space: pre-wrap; }
         <translation>Info Tournoi</translation>
     </message>
     <message>
-        <location filename="../TSHScoreboardManager.py" line="59"/>
-        <location filename="../TSHScoreboardManager.py" line="88"/>
+        <location filename="../TSHScoreboardManager.py" line="54"/>
+        <location filename="../TSHScoreboardManager.py" line="79"/>
         <source>Scoreboard</source>
         <translation>Tableau des scores</translation>
     </message>
@@ -1323,12 +1323,10 @@ p, li { white-space: pre-wrap; }
         <translation>Générer la miniature</translation>
     </message>
     <message>
-        <location filename="../TSHScoreboardWidget.py" line="188"/>
         <source>Generate Thumbnail</source>
         <translation>Générer la miniature</translation>
     </message>
     <message>
-        <location filename="../TSHScoreboardWidget.py" line="196"/>
         <source>Post to Bluesky</source>
         <translation>Envoyer un post sur Bluesky</translation>
     </message>

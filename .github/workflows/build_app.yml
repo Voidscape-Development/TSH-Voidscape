@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Generate Windows Release with Locale Files
+    name: Generate Windows Release #with Locale Files
     runs-on: ${{ matrix.os }}
     if: ${{ github.ref == 'refs/heads/main' || startsWith( github.ref, 'refs/heads/feature/' ) || startsWith( github.ref, 'refs/heads/fix/' ) }}
     strategy:
@@ -38,11 +38,11 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r .\dependencies\requirements.txt pyinstaller
 
-      - name: Generate locale files
-        run: |
-          pyside6-lrelease -version
-          python3 .\src\i18n\gen_translation_files.py
-          python3 .\src\i18n\gen_translation_binaries.py
+      # - name: Generate locale files
+      #   run: |
+      #     pyside6-lrelease -version
+      #     python3 .\src\i18n\gen_translation_files.py
+      #     python3 .\src\i18n\gen_translation_binaries.py
 
       - name: Generate TSH Windows executable
         run: |
