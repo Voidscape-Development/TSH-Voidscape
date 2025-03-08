@@ -3,6 +3,7 @@
 
 from .Helpers.TSHLocaleHelper import TSHLocaleHelper
 from .Helpers.TSHDirHelper import TSHResolve
+import faulthandler
 import shutil
 import zipfile
 import qdarktheme
@@ -23,6 +24,12 @@ from qtpy.QtWidgets import *
 from qtpy.QtCore import *
 from packaging.version import parse
 from loguru import logger
+from pathlib import Path
+
+crashpath = Path('./logs/tsh-crash.log').resolve()
+Path.mkdir(crashpath.parent, exist_ok=True)
+crashlog = crashpath.open(mode='w')
+faulthandler.enable(crashlog)
 
 QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 
@@ -99,6 +106,7 @@ logger.info("QApplication successfully initialized")
 from .Settings.TSHSettingsWindow import TSHSettingsWindow
 from .TSHHotkeys import TSHHotkeys
 from .TSHPlayerListWidget import TSHPlayerListWidget
+from .TSHNotesWidget import TSHNotesWidget
 from .TSHCommentaryWidget import TSHCommentaryWidget
 from .TSHGameAssetManager import TSHGameAssetManager
 from .TSHBracketWidget import TSHBracketWidget
@@ -242,7 +250,7 @@ class WindowSignals(QObject):
 class Window(QMainWindow):
     signals = WindowSignals()
 
-    def __init__(self, loop):
+    def __init__(self, loop=None):
         super().__init__()
 
         StateManager.loop = loop
@@ -367,6 +375,11 @@ class Window(QMainWindow):
         playerList.setObjectName(QApplication.translate("app", "Player List"))
         self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, playerList)
         self.dockWidgets.append(playerList)
+        
+        notes = TSHNotesWidget()
+        notes.setObjectName(QApplication.translate("app", "Additional Notes"))
+        self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, notes)
+        self.dockWidgets.append(notes)
 
         self.tabifyDockWidget(self.scoreboard, self.stageWidget)
         self.tabifyDockWidget(self.scoreboard, commentary)
@@ -374,6 +387,7 @@ class Window(QMainWindow):
         #self.tabifyDockWidget(self.scoreboard, thumbnailSetting)
         self.tabifyDockWidget(self.scoreboard, playerList)
         self.tabifyDockWidget(self.scoreboard, bracket)
+        self.tabifyDockWidget(self.scoreboard, notes)
         self.scoreboard.raise_()
 
         # Game
@@ -477,6 +491,7 @@ class Window(QMainWindow):
         toggleWidgets.addAction(tournamentInfo.toggleViewAction())
         toggleWidgets.addAction(playerList.toggleViewAction())
         toggleWidgets.addAction(bracket.toggleViewAction())
+        toggleWidgets.addAction(notes.toggleViewAction())
 
         self.optionsBt.menu().addSeparator()
 
@@ -776,9 +791,17 @@ class Window(QMainWindow):
     def closeEvent(self, event):
         self.qtSettings.setValue("geometry", self.saveGeometry())
         self.qtSettings.setValue("windowState", self.saveState())
+
         tmpDir = TSHResolve("tmp")
         if os.path.isdir(tmpDir):
             shutil.rmtree(tmpDir)
+
+        try:
+            crashlog.close()
+            if crashpath.stat().st_size == 0:
+                crashpath.unlink()
+        except:
+            pass
 
     def ReloadGames(self):
         logger.info("Reload games")

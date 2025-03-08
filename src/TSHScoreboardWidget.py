@@ -8,6 +8,7 @@ from qtpy import uic
 from typing import List
 from src.TSHColorButton import TSHColorButton
 from .Helpers.TSHDirHelper import TSHResolve
+from .Helpers.TSHBskyHelper import post_to_bsky
 
 from src.TSHSelectSetWindow import TSHSelectSetWindow
 from src.TSHSelectStationWindow import TSHSelectStationWindow
@@ -215,12 +216,14 @@ class TSHScoreboardWidget(QWidget):
             ["Location", ["locationLabel", "state", "country"]],
             ["Characters", ["characters"]],
             ["Pronouns", ["pronoun", "pronounLabel"]],
+            ["Additional information", ["custom_textbox"]],
         ]
         self.elements[0][0] = QApplication.translate("app", "Real Name")
         self.elements[1][0] = QApplication.translate("app", "Twitter")
         self.elements[2][0] = QApplication.translate("app", "Location")
         self.elements[3][0] = QApplication.translate("app", "Characters")
         self.elements[4][0] = QApplication.translate("app", "Pronouns")
+        self.elements[5][0] = QApplication.translate("app", "Additional information")
         for element in self.elements:
             action: QAction = self.eyeBt.menu().addAction(element[0])
             action.setCheckable(True)
@@ -245,6 +248,17 @@ class TSHScoreboardWidget(QWidget):
         bottomOptions.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
 
         self.innerWidget.layout().addWidget(bottomOptions)
+
+        self.streamUrl = QHBoxLayout()
+        self.streamUrlLabel = QLabel(QApplication.translate("app", "Stream URL") + " ")
+        self.streamUrl.layout().addWidget(self.streamUrlLabel)
+        self.streamUrlTextBox = QLineEdit()
+        self.streamUrl.layout().addWidget(self.streamUrlTextBox)
+        self.streamUrlTextBox.editingFinished.connect(
+            lambda element=self.streamUrlTextBox: StateManager.Set(
+                f"score.{self.scoreboardNumber}.stream_url", element.text()))
+        self.streamUrlTextBox.editingFinished.emit()
+        bottomOptions.layout().addLayout(self.streamUrl)
 
         self.btSelectSet = QPushButton(
             QApplication.translate("app", "Load set"))
@@ -478,7 +492,7 @@ class TSHScoreboardWidget(QWidget):
             matchString = TSHLocaleHelper.matchNames[key]
 
             try:
-                if "{0}" in matchString:
+                if "{0}" in matchString and ("qualifier" not in key):
                     for number in range(5):
                         if key == "best_of":
                             if self.scoreColumn.findChild(QComboBox, "match").findText(matchString.format(str(2*number+1))) < 0:
@@ -496,6 +510,10 @@ class TSHScoreboardWidget(QWidget):
                 logger.error(
                     f"Unable to generate match strings for {matchString}")
 
+        TSHGameAssetManager.instance.signals.onLoad.connect(
+            self.SetDefaultsFromAssets
+        )
+
     def ExportTeamLogo(self, team, value):
         if os.path.exists(f"./user_data/team_logo/{value.lower()}.png"):
             StateManager.Set(f"score.{self.scoreboardNumber}.team.{team}.logo",
@@ -504,7 +522,7 @@ class TSHScoreboardWidget(QWidget):
             StateManager.Set(
                 f"score.{self.scoreboardNumber}.team.{team}.logo", None)
 
-    def GenerateThumbnail(self):
+    def GenerateThumbnail(self, quiet_mode=False):
         msgBox = QMessageBox()
         msgBox.setWindowIcon(QIcon('assets/icons/icon.png'))
         msgBox.setWindowTitle(QApplication.translate(
@@ -519,25 +537,51 @@ class TSHScoreboardWidget(QWidget):
             # msgBox.setInformativeText(thumbnailPath)
 
             thumbnail_settings = SettingsManager.Get("thumbnail_config")
-            if thumbnail_settings.get("open_explorer"):
-                outThumbDir = f"{os.getcwd()}/out/thumbnails/"
-                if platform.system() == "Windows":
-                    thumbnailPath = thumbnailPath[2:].replace("/", "\\")
-                    outThumbDir = f"{os.getcwd()}\\{thumbnailPath}"
-                    # os.startfile(outThumbDir)
-                    subprocess.Popen(r'explorer /select,"'+outThumbDir+'"')
-                elif platform.system() == "Darwin":
-                    subprocess.Popen(["open", outThumbDir])
+            if not quiet_mode:
+                if thumbnail_settings.get("open_explorer"):
+                    outThumbDir = f"{os.getcwd()}/out/thumbnails/"
+                    if platform.system() == "Windows":
+                        thumbnailPath = thumbnailPath[2:].replace("/", "\\")
+                        outThumbDir = f"{os.getcwd()}\\{thumbnailPath}"
+                        # os.startfile(outThumbDir)
+                        subprocess.Popen(r'explorer /select,"'+outThumbDir+'"')
+                    elif platform.system() == "Darwin":
+                        subprocess.Popen(["open", outThumbDir])
+                    else:
+                        subprocess.Popen(["xdg-open", outThumbDir])
                 else:
-                    subprocess.Popen(["xdg-open", outThumbDir])
+                    msgBox.exec()
             else:
-                msgBox.exec()
+                return(thumbnailPath)
         except Exception as e:
             msgBox.setText(QApplication.translate("app", "Warning"))
             msgBox.setInformativeText(str(e))
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.exec()
+    
+    def PostToBsky(self):
+        thumbnailPath = self.GenerateThumbnail(quiet_mode=True)
+        if thumbnailPath:
+            msgBox = QMessageBox()
+            msgBox.setWindowIcon(QIcon('assets/icons/icon.png'))
+            msgBox.setWindowTitle(QApplication.translate(
+                "app", "TSH - Bluesky"))
 
+            try:
+                post_to_bsky(scoreboardNumber=self.scoreboardNumber, image_path=thumbnailPath.replace(".png", ".jpg"))
+                username = SettingsManager.Get("bsky_account", {}).get("username")
+                msgBox.setText(QApplication.translate("app", "The post has successfully been sent to account {0}").format(username))
+                msgBox.setIcon(QMessageBox.NoIcon)
+                msgBox.exec()
+            except Exception as e:
+                msgBox.setText(QApplication.translate("app", "Warning"))
+                msgBox.setInformativeText(str(e))
+                msgBox.setIcon(QMessageBox.Warning)
+                msgBox.exec()
+            for rm_path in [thumbnailPath, thumbnailPath.replace(".png", ".jpg"), thumbnailPath.replace(".png", "_desc.txt"), thumbnailPath.replace(".png", "_title.txt")]:
+                if os.path.exists(rm_path):
+                    os.remove(rm_path)
+    
     def ToggleElements(self, action: QAction, elements):
         for pw in self.playerWidgets:
             for element in elements:
@@ -975,6 +1019,10 @@ class TSHScoreboardWidget(QWidget):
             if self.teamsSwapped:
                 losersContainers.reverse()
 
+            if data.get("stream"):
+                self.streamUrlTextBox.setText(data.get("stream"))
+                self.streamUrlTextBox.editingFinished.emit()
+
             if data.get("team1losers") is not None:
                 losersContainers[0].setChecked(data.get("team1losers"))
             if data.get("team2losers") is not None:
@@ -1016,6 +1064,8 @@ class TSHScoreboardWidget(QWidget):
                                     "mains": player.get("mains")
                                 }
                                 teamInstance[p].SetData(player, True, False)
+                except Exception as e:
+                    logger.error(f"Error while setting entrants: {e}")
                 finally:
                     for p in self.playerWidgets:
                         p.dataLock.release()
@@ -1037,6 +1087,8 @@ class TSHScoreboardWidget(QWidget):
 
                     teamInstance[player].SetData(
                         data.get("data"), False, False)
+                except Exception as e:
+                    logger.error(f"Error while setting entrants: {e}")
                 finally:
                     for p in self.playerWidgets:
                         p.dataLock.release()
@@ -1090,3 +1142,12 @@ class TSHScoreboardWidget(QWidget):
                 return True
         else:
             return False
+
+    def SetDefaultsFromAssets(self):
+        if StateManager.Get(f'game.defaults'):
+            players, characters = StateManager.Get(f'game.defaults.players_per_team', 1), StateManager.Get(f'game.defaults.characters_per_player', 1)
+        else:
+            players, characters = 1, 1
+        print(players, "players", characters, "characters")
+        self.playerNumber.setValue(players)
+        self.charNumber.setValue(characters)

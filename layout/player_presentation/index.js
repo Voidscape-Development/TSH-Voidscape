@@ -122,7 +122,7 @@ LoadEverything().then(() => {
             $(`.p${t + 1} > .sponsor_logo`),
             player.sponsor_logo
               ? `
-                <div class='sponsor_logo' style='background-image: url(../../${player.sponsor_logo})'></div>
+                <div class='sponsor_logo' style="background-image: url('../../${player.sponsor_logo}')"></div>
                 `
               : ""
           );
@@ -168,7 +168,7 @@ LoadEverything().then(() => {
             player.country.asset
               ? `
               <div>
-                  <div class='flag' style='background-image: url(../../${player.country.asset});'>
+                  <div class='flag' style="background-image: url('../../${player.country.asset}');">
                       <div class="flagname">${player.country.code}</div>
                   </div>
               </div>`
@@ -180,7 +180,7 @@ LoadEverything().then(() => {
             player.state.asset
               ? `
               <div>
-                  <div class='flag' style='background-image: url(../../${player.state.asset});'>
+                  <div class='flag' style="background-image: url('../../${player.state.asset}');">
                       <div class="flagname">${player.state.code}</div>
                   </div>
               </div>`
@@ -267,7 +267,8 @@ LoadEverything().then(() => {
 
       // ------- LAST RESULTS -------------
       let history = data.score[window.scoreboardNumber].history_sets[window.PLAYER];
-      if (history){
+      let oldHistory = _.get(oldData, `score[${window.scoreboardNumber}].history_sets[${window.PLAYER}]`);
+      if (JSON.stringify(history) != JSON.stringify(oldHistory)){
         let results_html = `<div class ="info title">${config.display_titles ? "Recent Results" : " "}</div>`
         let className = `.results`;
         let tl = gsap.timeline();
@@ -334,8 +335,9 @@ LoadEverything().then(() => {
       //------ BRACKET RUN --------
 
       let last_sets = data.score[window.scoreboardNumber].last_sets[window.PLAYER];
+      let oldLastSets = _.get(oldData, `score[${window.scoreboardNumber}].last_sets[${window.PLAYER}]`);
       console.log("SETS", last_sets);
-      if (last_sets){
+      if (JSON.stringify(last_sets) != JSON.stringify(oldLastSets)){
         let sets_html = `<div class ="info title">${config.display_titles ? "Current Run" : " "}</div>` ;
         Object.values(last_sets)
           .slice(0, SETS)
@@ -564,41 +566,6 @@ LoadEverything().then(() => {
 
     //SetInnerHtml($(".tournament"), data.tournamentInfo.tournamentName);
     //SetInnerHtml($(".match"), data.score[window.scoreboardNumber].match);
-
-    let stage = null;
-
-    if (_.get(data, `score.${window.scoreboardNumber}.stage_strike.selectedStage`)) {
-      let stageId = _.get(data, `score.${window.scoreboardNumber}.stage_strike.selectedStage`);
-
-      let allStages = _.get(data, "score.ruleset.neutralStages", []).concat(
-        _.get(data, "score.ruleset.counterpickStages", [])
-      );
-
-      stage = allStages.find((s) => s.codename == stageId);
-    }
-
-    if (
-      stage &&
-      _.get(data, `score.${window.scoreboardNumber}.stage_strike.selectedStage`) !=
-        _.get(oldData, `score.${window.scoreboardNumber}.stage_strike.selectedStage`)
-    ) {
-      gsap.fromTo(
-        $(`.stage`),
-        { scale: 2 },
-        { scale: 1.2, duration: 0.8, ease: "power2.out" }
-      );
-    }
-
-    SetInnerHtml(
-      $(`.stage`),
-      stage
-        ? `
-        <div>
-            <div class='' style='background-image: url(../../${stage.path});'>
-            </div>
-        </div>`
-        : ""
-    );
 
     /*SetInnerHtml(
       $(".phase_best_of"),
