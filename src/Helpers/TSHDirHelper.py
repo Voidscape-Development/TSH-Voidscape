@@ -12,5 +12,5 @@ def TSHResolve(full_path):
         full_file = Path(sys._MEIPASS, full_path)
 
     full_file = str(full_file.resolve())
-    logger.info(f"load: {full_file} [full_path={full_path}, exists={file_does_exist}, cwd={current_dir}]")
+    # logger.info(f"load: {full_file} [full_path={full_path}, exists={file_does_exist}, cwd={current_dir}]")
     return full_file

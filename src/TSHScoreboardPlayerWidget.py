@@ -633,7 +633,7 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         self.dataLock.acquire()
         StateManager.BlockSaving()
 
-        logger.debug(f"Setting data for {self.path}: {data}")
+        # logger.debug(f"Setting data for {self.path}: {data}")
 
         try:
             if clear:

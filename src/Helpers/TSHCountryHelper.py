@@ -216,14 +216,14 @@ class TSHCountryHelper(QObject):
                 TSHCountryHelper.countryModel.appendRow(item)
         except:
             TSHCountryHelper.countries_json = {}
-            logger.error(traceback.format_exc())
+            # logger.error(traceback.format_exc())
 
     def FindState(countryCode, city):
         # State explicit?
         # Normalize parts of city string
         split = city.replace(" - ", ",").split(",")
 
-        logger.debug(f"Finding State from city string [{city}]")
+        # logger.debug(f"Finding State from city string [{city}]")
 
         for part in split[::-1]:
             part = part.strip()
@@ -240,8 +240,8 @@ class TSHCountryHelper(QObject):
                     None
                 )
             if state is not None:
-                logger.debug(
-                    f"State was explicit: [{city}] -> [{part}] = {state}")
+                # logger.debug(
+                #     f"State was explicit: [{city}] -> [{part}] = {state}")
                 return state["original_code"]
 
         # No, so get by City
@@ -252,7 +252,7 @@ class TSHCountryHelper(QObject):
                 TSHCountryHelper.remove_accents_lower(part), None)
 
             if state is not None:
-                logger.debug(f"Got state from city name: [{city}] -> [{part}] = {state}")
+                # logger.debug(f"Got state from city name: [{city}] -> [{part}] = {state}")
                 return state
 
         return None
