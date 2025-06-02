@@ -75,16 +75,16 @@ class TSHCommentaryWidget(QDockWidget):
             ["Location",               ["locationLabel", "state", "country"], "show_location"],
             ["Characters",             ["characters"],                        "show_characters"],
             ["Pronouns",               ["pronoun", "pronounLabel"],           "show_pronouns"],
-            ["Controller",             ["controller", "controllerLabel"],     "show_controller"],
-            ["Additional information", ["custom_textbox"],                    "show_additional"],
+            # ["Controller",             ["controller", "controllerLabel"],     "show_controller"],
+            # ["Additional information", ["custom_textbox"],                    "show_additional"],
         ]
         self.elements[0][0] = QApplication.translate("app", "Real Name")
         self.elements[1][0] = QApplication.translate("app", "Twitter")
         self.elements[2][0] = QApplication.translate("app", "Location")
         self.elements[3][0] = QApplication.translate("app", "Characters")
         self.elements[4][0] = QApplication.translate("app", "Pronouns")
-        self.elements[5][0] = QApplication.translate("app", "Controller")
-        self.elements[6][0] = QApplication.translate("app", "Additional information")
+        # self.elements[5][0] = QApplication.translate("app", "Controller")
+        # self.elements[6][0] = QApplication.translate("app", "Additional information")
         for element in self.elements:
             action: QAction = self.eyeBt.menu().addAction(element[0])
             action.setCheckable(True)

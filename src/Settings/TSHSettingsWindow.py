@@ -83,7 +83,7 @@ class TSHSettingsWindow(QDialog):
                 "settings.hide_track_player", "Hide the StartGG player tracking functionality from TSH (takes effect on next restart)"),
             "hide_track_player",
             "checkbox",
-            False
+            True
         ))
 
         self.add_setting_widget(QApplication.translate(
@@ -164,21 +164,21 @@ class TSHSettingsWindow(QDialog):
             True
         ))
 
-        displaySettings.append((
-            QApplication.translate(
-                "settings.show_controller", "Show Controller"),
-            "show_controller",
-            "checkbox",
-            True
-        ))
+        # displaySettings.append((
+        #     QApplication.translate(
+        #         "settings.show_controller", "Show Controller"),
+        #     "show_controller",
+        #     "checkbox",
+        #     True
+        # ))
 
-        displaySettings.append((
-            QApplication.translate(
-                "settings.show_additional", "Show Additional Info"),
-            "show_additional",
-            "checkbox",
-            True
-        ))
+        # displaySettings.append((
+        #     QApplication.translate(
+        #         "settings.show_additional", "Show Additional Info"),
+        #     "show_additional",
+        #     "checkbox",
+        #     True
+        # ))
         
         self.add_setting_widget(QApplication.translate(
             "settings", "Default Display Options"), SettingsWidget("display_options", displaySettings))

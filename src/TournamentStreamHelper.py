@@ -120,7 +120,7 @@ from .Workers import *
 from .StateManager import StateManager
 from .SettingsManager import SettingsManager
 from .Helpers.TSHCountryHelper import TSHCountryHelper
-from .Helpers.TSHControllerHelper import TSHControllerHelper
+# from .Helpers.TSHControllerHelper import TSHControllerHelper
 from .TSHScoreboardManager import TSHScoreboardManager
 from .TSHThumbnailSettingsWidget import TSHThumbnailSettingsWidget
 from src.TSHAssetDownloader import TSHAssetDownloader
@@ -168,7 +168,7 @@ def DownloadLayoutsOnBoot():
         except Exception as e:
             logger.error(f"Layouts could not be downloaded\nError: {str(e)}")
 
-DownloadLayoutsOnBoot()
+# DownloadLayoutsOnBoot()
 
 def generate_restart_messagebox(main_txt):
     messagebox = QMessageBox()
@@ -461,7 +461,7 @@ class Window(QMainWindow):
         hbox.addWidget(self.unsetTournamentBt)
 
         # Follow startgg user
-        if not SettingsManager.Get("general.hide_track_player", False):
+        if not SettingsManager.Get("general.hide_track_player", True):
             hbox = QHBoxLayout()
             group_box.layout().addLayout(hbox)
 
@@ -825,9 +825,10 @@ class Window(QMainWindow):
 
         StateManager.ReleaseSaving()
 
-        TSHScoreboardManager.instance.signals.ScoreboardAmountChanged.connect(
-            self.ToggleTopOption)
+        # TSHScoreboardManager.instance.signals.ScoreboardAmountChanged.connect(
+        #     self.ToggleTopOption)
         StateManager.Unset("completed_sets")
+        DownloadLayoutsOnBoot()
 
     def SetGame(self):
         index = next((i for i in range(self.gameSelect.model().rowCount()) if self.gameSelect.itemText(i) == TSHGameAssetManager.instance.selectedGame.get(
