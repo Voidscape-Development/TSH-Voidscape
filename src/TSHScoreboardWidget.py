@@ -211,23 +211,25 @@ class TSHScoreboardWidget(QWidget):
         menu.addSection("Players")
 
         self.elements = [
-            ["Real Name", ["real_name", "real_nameLabel"]],
-            ["Twitter", ["twitter", "twitterLabel"]],
-            ["Location", ["locationLabel", "state", "country"]],
-            ["Characters", ["characters"]],
-            ["Pronouns", ["pronoun", "pronounLabel"]],
-            ["Additional information", ["custom_textbox"]],
+            ["Real Name",              ["real_name", "real_nameLabel"],       "show_name"],
+            ["Twitter",                ["twitter", "twitterLabel"],           "show_social"],
+            ["Location",               ["locationLabel", "state", "country"], "show_location"],
+            ["Characters",             ["characters"],                        "show_characters"],
+            ["Pronouns",               ["pronoun", "pronounLabel"],           "show_pronouns"],
+            ["Controller",             ["controller", "controllerLabel"],     "show_controller"],
+            ["Additional information", ["custom_textbox"],                    "show_additional"],
         ]
         self.elements[0][0] = QApplication.translate("app", "Real Name")
         self.elements[1][0] = QApplication.translate("app", "Twitter")
         self.elements[2][0] = QApplication.translate("app", "Location")
         self.elements[3][0] = QApplication.translate("app", "Characters")
         self.elements[4][0] = QApplication.translate("app", "Pronouns")
-        self.elements[5][0] = QApplication.translate("app", "Additional information")
+        self.elements[5][0] = QApplication.translate("app", "Controller")
+        self.elements[6][0] = QApplication.translate("app", "Additional information")
         for element in self.elements:
             action: QAction = self.eyeBt.menu().addAction(element[0])
             action.setCheckable(True)
-            action.setChecked(True)
+            action.setChecked(SettingsManager.Get(f"display_options.{element[2]}", True))
             action.toggled.connect(
                 lambda toggled, action=action, element=element: self.ToggleElements(action, element[1]))
 
@@ -280,27 +282,27 @@ class TSHScoreboardWidget(QWidget):
         hbox = QHBoxLayout()
         bottomOptions.layout().addLayout(hbox)
 
-        #if self.scoreboardNumber <= 1:
-        #    self.btLoadPlayerSet = QPushButton("Load player set")
-        #    self.btLoadPlayerSet.setIcon(
-        #        QIcon("./assets/icons/person_search.svg"))
-        #    self.btLoadPlayerSet.setEnabled(False)
-        #    self.btLoadPlayerSet.clicked.connect(
-        #        self.signals.UserSetSelection.emit)
-        #    hbox.addWidget(self.btLoadPlayerSet)
-        #    TSHTournamentDataProvider.instance.signals.user_updated.connect(
-        #        self.UpdateUserSetButton)
-        #    TSHTournamentDataProvider.instance.signals.tournament_changed.connect(
-        #        self.UpdateUserSetButton)
-        #
-        #    self.btLoadPlayerSetOptions = QPushButton()
-        #    self.btLoadPlayerSetOptions.setSizePolicy(
-        #        QSizePolicy.Maximum, QSizePolicy.Maximum)
-        #    self.btLoadPlayerSetOptions.setIcon(
-        #        QIcon("./assets/icons/settings.svg"))
-        #    self.btLoadPlayerSetOptions.clicked.connect(
-        #        self.LoadUserSetOptionsClicked)
-        #    hbox.addWidget(self.btLoadPlayerSetOptions)
+        if self.scoreboardNumber <= 1 and not SettingsManager.Get("general.hide_track_player", False) :
+            self.btLoadPlayerSet = QPushButton("Load player set")
+            self.btLoadPlayerSet.setIcon(
+                QIcon("./assets/icons/person_search.svg"))
+            self.btLoadPlayerSet.setEnabled(False)
+            self.btLoadPlayerSet.clicked.connect(
+                self.signals.UserSetSelection.emit)
+            hbox.addWidget(self.btLoadPlayerSet)
+            TSHTournamentDataProvider.instance.signals.user_updated.connect(
+                self.UpdateUserSetButton)
+            TSHTournamentDataProvider.instance.signals.tournament_changed.connect(
+                self.UpdateUserSetButton)
+
+            self.btLoadPlayerSetOptions = QPushButton()
+            self.btLoadPlayerSetOptions.setSizePolicy(
+                QSizePolicy.Maximum, QSizePolicy.Maximum)
+            self.btLoadPlayerSetOptions.setIcon(
+                QIcon("./assets/icons/settings.svg"))
+            self.btLoadPlayerSetOptions.clicked.connect(
+                self.LoadUserSetOptionsClicked)
+            hbox.addWidget(self.btLoadPlayerSetOptions)
 
         TSHTournamentDataProvider.instance.signals.tournament_changed.connect(
             self.UpdateBottomButtons)
@@ -592,8 +594,8 @@ class TSHScoreboardWidget(QWidget):
             self.btSelectSet.setText(
                 QApplication.translate("app", "Load set from {0}").format(TSHTournamentDataProvider.instance.provider.url))
             self.btSelectSet.setEnabled(True)
-            #if self.scoreboardNumber <= 1:
-            #    self.btLoadPlayerSet.setEnabled(True)
+            if self.scoreboardNumber <= 1 and not SettingsManager.Get("general.hide_track_player", False):
+                self.btLoadPlayerSet.setEnabled(True)
         else:
             self.btSelectSet.setText(
                 QApplication.translate("app", "Load set"))
@@ -1135,13 +1137,13 @@ class TSHScoreboardWidget(QWidget):
 
         if self.teamsSwapped:
             teamInstances.reverse()
-        for player_db in TSHPlayerDB.database.values():
-            if tag.lower() == player_db.get("gamerTag").lower():
-                teamInstances[team][player].SetData(
-                    player_db, False, True, no_mains)
-                return True
-        else:
-            return False
+
+        playerData = TSHPlayerDB.GetPlayerFromTag(tag)
+        if playerData:
+            teamInstances[team][player].SetData(
+                    playerData, False, True, no_mains)
+            return True
+        return False
 
     def SetDefaultsFromAssets(self):
         if StateManager.Get(f'game.defaults'):

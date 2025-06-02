@@ -1,3 +1,6 @@
 [submodule "Voidscape-Layouts"]
 	path = Voidscape-Layouts
 	url = https://github.com/Voidscape-Development/Voidscape-Layouts
+[submodule "layout"]
+	path = layout
+	url = https://github.com/TournamentStreamHelper/TournamentStreamHelper-layouts.git
