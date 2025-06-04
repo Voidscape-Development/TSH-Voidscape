@@ -168,8 +168,6 @@ def DownloadLayoutsOnBoot():
         except Exception as e:
             logger.error(f"Layouts could not be downloaded\nError: {str(e)}")
 
-# DownloadLayoutsOnBoot()
-
 def generate_restart_messagebox(main_txt):
     messagebox = QMessageBox()
     messagebox.setWindowTitle(QApplication.translate("app", "Warning"))
