@@ -828,7 +828,7 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                         if i < len(self.character_elements):
                             character_element = self.character_elements[i][1]
                             color_element = self.character_elements[i][2]
-                            variant_element = self.character_elements[i][3]
+                            # variant_element = self.character_elements[i][3]
                             characterIndex = 0
                             for i in range(character_element.model().rowCount()):
                                 item = character_element.model().item(i).data(Qt.ItemDataRole.UserRole)
@@ -846,22 +846,22 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                                 if color_element.currentIndex() != 0:
                                     color_element.setCurrentIndex(0)
                             
-                            variantIndex = 0
-                            if variant_element:
-                                for i in range(variant_element.model().rowCount()):
-                                    item = variant_element.model().item(i).data(Qt.ItemDataRole.UserRole)
-                                    if item:
-                                        if len(main) >= 3 :
-                                            if item.get("en_name") == main[2]:
-                                                variantIndex = i
-                                                break
-                                        else:
-                                            variantIndex = 0
-                                            break
-                            else:
-                                variantIndex = 0
-                            if variant_element.currentIndex() != variantIndex:
-                                variant_element.setCurrentIndex(variantIndex)
+                            # variantIndex = 0
+                            # if variant_element:
+                            #     for i in range(variant_element.model().rowCount()):
+                            #         item = variant_element.model().item(i).data(Qt.ItemDataRole.UserRole)
+                            #         if item:
+                            #             if len(main) >= 3 :
+                            #                 if item.get("en_name") == main[2]:
+                            #                     variantIndex = i
+                            #                     break
+                            #             else:
+                            #                 variantIndex = 0
+                            #                 break
+                            # else:
+                            #     variantIndex = 0
+                            # if variant_element.currentIndex() != variantIndex:
+                            #     variant_element.setCurrentIndex(variantIndex)
 
             if data.get("seed"):
                 StateManager.Set(f"{self.path}.seed", data.get("seed"))
@@ -891,7 +891,7 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         if TSHGameAssetManager.instance.selectedGame.get("codename"):
             mains = []
 
-            for i, (element, character, color, variant) in enumerate(self.character_elements):
+            for i, (element, character, color) in enumerate(self.character_elements):
                 data = {}
 
                 if character.currentData() is not None:
@@ -904,13 +904,13 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                 if data["skin"] == None:
                     data["skin"] = 0
                     
-                if variant.currentData():
-                    data["variant"] = variant.currentData().get("en_name", "")
-                else:
-                    data["variant"] = ""
+                # if variant.currentData():
+                #     data["variant"] = variant.currentData().get("en_name", "")
+                # else:
+                #     data["variant"] = ""
 
                 if data["name"] != "":
-                    mains.append([data.get("name"), data.get("skin"), data.get("variant")])
+                    mains.append([data.get("name"), data.get("skin")]) #, data.get("variant")])
 
             playerData["mains"] = {
                 TSHGameAssetManager.instance.selectedGame.get("codename"): mains
