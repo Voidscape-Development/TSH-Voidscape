@@ -131,7 +131,7 @@ class TSHScoreboardStageWidget(QDockWidget):
         self.labelValidation.setText("")
 
         self.signals.rulesets_changed.connect(self.LoadRulesets)
-        self.LoadStartggRulesets()
+        # self.LoadStartggRulesets()
         self.LoadRuleset()
 
         TSHGameAssetManager.instance.signals.onLoad.connect(self.SetupOptions)

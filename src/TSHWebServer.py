@@ -255,22 +255,22 @@ class WebServer(QThread):
         emit('characters', WebServer.actions.get_characters(), json=True)
 
     # Get variants
-    @app.route('/variants')
-    def get_variants():
-        return WebServer.actions.get_variants()
+    # @app.route('/variants')
+    # def get_variants():
+    #     return WebServer.actions.get_variants()
 
-    @socketio.on('variants')
-    def ws_get_variants(message):
-        emit('variants', WebServer.actions.get_variants(), json=True)
+    # @socketio.on('variants')
+    # def ws_get_variants(message):
+    #     emit('variants', WebServer.actions.get_variants(), json=True)
 
     # Get controllers
-    @app.route('/controllers')
-    def get_controllers():
-        return WebServer.actions.get_controllers()
+    # @app.route('/controllers')
+    # def get_controllers():
+    #     return WebServer.actions.get_controllers()
 
-    @socketio.on('controllers')
-    def ws_get_controllers(message):
-        emit('controllers', WebServer.actions.get_controllers(), json=True)
+    # @socketio.on('controllers')
+    # def ws_get_controllers(message):
+    #     emit('controllers', WebServer.actions.get_controllers(), json=True)
 
     # Swaps teams
     @app.route('/scoreboard<scoreboardNumber>-swap-teams')

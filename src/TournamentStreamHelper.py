@@ -105,16 +105,16 @@ logger.info("QApplication successfully initialized")
 
 # autopep8: off
 from .Settings.TSHSettingsWindow import TSHSettingsWindow
-from .TSHHotkeys import TSHHotkeys
+# from .TSHHotkeys import TSHHotkeys
 from .TSHPlayerListWidget import TSHPlayerListWidget
-from .TSHNotesWidget import TSHNotesWidget
+# from .TSHNotesWidget import TSHNotesWidget
 from .TSHCommentaryWidget import TSHCommentaryWidget
 from .TSHGameAssetManager import TSHGameAssetManager
 from .TSHBracketWidget import TSHBracketWidget
 from .TSHTournamentInfoWidget import TSHTournamentInfoWidget
 from .TSHTournamentDataProvider import TSHTournamentDataProvider
 from .TournamentDataProvider.StartGGDataProvider import StartGGDataProvider
-from .TSHAlertNotification import TSHAlertNotification
+# from .TSHAlertNotification import TSHAlertNotification
 from .TSHPlayerDB import TSHPlayerDB
 from .Workers import *
 from .StateManager import StateManager
@@ -122,51 +122,51 @@ from .SettingsManager import SettingsManager
 from .Helpers.TSHCountryHelper import TSHCountryHelper
 # from .Helpers.TSHControllerHelper import TSHControllerHelper
 from .TSHScoreboardManager import TSHScoreboardManager
-from .TSHThumbnailSettingsWidget import TSHThumbnailSettingsWidget
+# from .TSHThumbnailSettingsWidget import TSHThumbnailSettingsWidget
 from src.TSHAssetDownloader import TSHAssetDownloader
-from src.TSHAboutWidget import TSHAboutWidget
+# from src.TSHAboutWidget import TSHAboutWidget
 from .TSHScoreboardStageWidget import TSHScoreboardStageWidget
 from src.TSHWebServer import WebServer
 # autopep8: on
 
-def DownloadLayoutsOnBoot():
-    """
-    Downloads latest layouts from Github if the folder is empty
-    """
-    layouts_path = "./layout"
-    has_layouts = True
-    if os.path.isdir(layouts_path):
-        if not os.listdir(layouts_path) or len(os.listdir(layouts_path)) <= 2:
-            has_layouts = False
-    else:
-        if os.path.isfile(layouts_path):
-            os.remove(layouts_path)
-        os.mkdir(layouts_path)
-        has_layouts = False
-    if not has_layouts:
-        logger.info("Layouts were not detected, downloading from Github...")
-        try:
-            url = "https://github.com/TournamentStreamHelper/TournamentStreamHelper-layouts/archive/refs/heads/main.zip"
-            r = requests.get(url, allow_redirects=True)
-            zip_path = './layout/layout.zip.tmp'
-            with open(zip_path, 'wb') as zip_file:
-                zip_file.write(r.content)
-            try:
-                with zipfile.ZipFile(zip_path, 'r') as zip_file:
-                    zip_file.extractall('./layout')
-                list_files = glob(f"./layout/TournamentStreamHelper-layouts-main/*")
-                for file_path in list_files:
-                    if os.name == 'nt':
-                        new_file_path = file_path.replace("TournamentStreamHelper-layouts-main\\", "")
-                    else:
-                        new_file_path = file_path.replace("TournamentStreamHelper-layouts-main/", "")
-                    os.rename(file_path, new_file_path)
-                os.rmdir(f"./layout/TournamentStreamHelper-layouts-main")
-                os.remove(zip_path)
-            except Exception as e:
-                logger.error(f"Layouts could not be extracted\nError: {str(e)}")
-        except Exception as e:
-            logger.error(f"Layouts could not be downloaded\nError: {str(e)}")
+# def DownloadLayoutsOnBoot():
+#     """
+#     Downloads latest layouts from Github if the folder is empty
+#     """
+#     layouts_path = "./layout"
+#     has_layouts = True
+#     if os.path.isdir(layouts_path):
+#         if not os.listdir(layouts_path) or len(os.listdir(layouts_path)) <= 2:
+#             has_layouts = False
+#     else:
+#         if os.path.isfile(layouts_path):
+#             os.remove(layouts_path)
+#         os.mkdir(layouts_path)
+#         has_layouts = False
+#     if not has_layouts:
+#         logger.info("Layouts were not detected, downloading from Github...")
+#         try:
+#             url = "https://github.com/TournamentStreamHelper/TournamentStreamHelper-layouts/archive/refs/heads/main.zip"
+#             r = requests.get(url, allow_redirects=True)
+#             zip_path = './layout/layout.zip.tmp'
+#             with open(zip_path, 'wb') as zip_file:
+#                 zip_file.write(r.content)
+#             try:
+#                 with zipfile.ZipFile(zip_path, 'r') as zip_file:
+#                     zip_file.extractall('./layout')
+#                 list_files = glob(f"./layout/TournamentStreamHelper-layouts-main/*")
+#                 for file_path in list_files:
+#                     if os.name == 'nt':
+#                         new_file_path = file_path.replace("TournamentStreamHelper-layouts-main\\", "")
+#                     else:
+#                         new_file_path = file_path.replace("TournamentStreamHelper-layouts-main/", "")
+#                     os.rename(file_path, new_file_path)
+#                 os.rmdir(f"./layout/TournamentStreamHelper-layouts-main")
+#                 os.remove(zip_path)
+#             except Exception as e:
+#                 logger.error(f"Layouts could not be extracted\nError: {str(e)}")
+#         except Exception as e:
+#             logger.error(f"Layouts could not be downloaded\nError: {str(e)}")
 
 def generate_restart_messagebox(main_txt):
     messagebox = QMessageBox()
@@ -177,106 +177,106 @@ def generate_restart_messagebox(main_txt):
     return (messagebox)
 
 
-def UpdateProcedure():
-    """
-        Update Procedure -- backup layouts, register extraction on program close
-    """
+# def UpdateProcedure():
+#     """
+#         Update Procedure -- backup layouts, register extraction on program close
+#     """
 
-    try:
-        # Backup layouts
-        os.rename(
-            "./layout", f"./layout_backup_{str(time.time())}")
+#     try:
+#         # Backup layouts
+#         os.rename(
+#             "./layout", f"./layout_backup_{str(time.time())}")
 
-        # Register update extraction on program close
-        atexit.register(ExtractUpdate)
+#         # Register update extraction on program close
+#         atexit.register(ExtractUpdate)
 
-        messagebox = generate_restart_messagebox(
-            QApplication.translate(
-                "app", "Update download complete. The program will extract the update upon closing.")
-            + "\n\n"
-            + QApplication.translate(
-                "app", "Please ensure the layout folder or its contents aren't open in another application before closing this window.")
-            + "\n"
-        )
+#         messagebox = generate_restart_messagebox(
+#             QApplication.translate(
+#                 "app", "Update download complete. The program will extract the update upon closing.")
+#             + "\n\n"
+#             + QApplication.translate(
+#                 "app", "Please ensure the layout folder or its contents aren't open in another application before closing this window.")
+#             + "\n"
+#         )
 
-        messagebox.exec()
-    except Exception as e:
-        # Layout folder backups failed
-        logger.error(traceback.format_exc())
+#         messagebox.exec()
+#     except Exception as e:
+#         # Layout folder backups failed
+#         logger.error(traceback.format_exc())
 
-        buttonReply = QDialog()
-        buttonReply.setWindowTitle(
-            QApplication.translate("app", "Warning"))
-        vbox = QVBoxLayout()
-        buttonReply.setLayout(vbox)
+#         buttonReply = QDialog()
+#         buttonReply.setWindowTitle(
+#             QApplication.translate("app", "Warning"))
+#         vbox = QVBoxLayout()
+#         buttonReply.setLayout(vbox)
 
-        buttonReply.layout().addWidget(
-            QLabel(QApplication.translate(
-                "updater",
-                "Error while backing up the layout folder:")
-            )
-        )
-        buttonReply.layout().addWidget(QLabel(str(e)))
+#         buttonReply.layout().addWidget(
+#             QLabel(QApplication.translate(
+#                 "updater",
+#                 "Error while backing up the layout folder:")
+#             )
+#         )
+#         buttonReply.layout().addWidget(QLabel(str(e)))
 
-        hbox = QHBoxLayout()
-        vbox.addLayout(hbox)
+#         hbox = QHBoxLayout()
+#         vbox.addLayout(hbox)
 
-        btRetry = QPushButton(
-            QApplication.translate("updater", "Retry"))
-        hbox.addWidget(btRetry)
-        btCancel = QPushButton(
-            QApplication.translate("updater", "Cancel"))
-        hbox.addWidget(btCancel)
+#         btRetry = QPushButton(
+#             QApplication.translate("updater", "Retry"))
+#         hbox.addWidget(btRetry)
+#         btCancel = QPushButton(
+#             QApplication.translate("updater", "Cancel"))
+#         hbox.addWidget(btCancel)
 
-        btRetry.clicked.connect(lambda: [
-            buttonReply.close(),
-            UpdateProcedure()
-        ])
+#         btRetry.clicked.connect(lambda: [
+#             buttonReply.close(),
+#             UpdateProcedure()
+#         ])
 
-        btCancel.clicked.connect(
-            lambda: buttonReply.close()
-        )
+#         btCancel.clicked.connect(
+#             lambda: buttonReply.close()
+#         )
 
-        buttonReply.exec()
-
-
-def ExtractUpdate():
-    try:
-        updateLog = []
-        with zipfile.ZipFile("update.zip", "r") as z:
-            # backup exe
-            os.rename("./TSH.exe", "./TSH_old.exe")
-
-            for filename in z.namelist():
-                if "/" in filename:
-                    fullname = filename.split("/", 1)[1]
-                    if fullname.endswith("/"):
-                        updateLog.append(f"Create directory {fullname}")
-                        try:
-                            os.makedirs(os.path.dirname(fullname), exist_ok=True)
-                        except Exception:
-                            updateLog.append(f"Failed to create {filename} - {traceback.format_exc()}")
-                    else:
-                        updateLog.append(f"Extract {filename} -> {fullname}")
-                        try:
-                            z.extract(filename, path=os.path.dirname(fullname))
-                        except Exception:
-                            updateLog.append(f"Failed to extract {filename} - {traceback.format_exc()}")
-
-            try:
-                with open("assets/update_log.txt", "w") as f:
-                    f.writelines(updateLog)
-            except:
-                logger.error(traceback.format_exc())
-
-        os.remove("update.zip")
-    except Exception as e:
-        logger.error(traceback.format_exc())
+#         buttonReply.exec()
 
 
-def remove_accents_lower(input_str):
-    nfkd_form = unicodedata.normalize('NFKD', input_str)
-    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)]).lower()
+# def ExtractUpdate():
+#     try:
+#         updateLog = []
+#         with zipfile.ZipFile("update.zip", "r") as z:
+#             # backup exe
+#             os.rename("./TSH.exe", "./TSH_old.exe")
+
+#             for filename in z.namelist():
+#                 if "/" in filename:
+#                     fullname = filename.split("/", 1)[1]
+#                     if fullname.endswith("/"):
+#                         updateLog.append(f"Create directory {fullname}")
+#                         try:
+#                             os.makedirs(os.path.dirname(fullname), exist_ok=True)
+#                         except Exception:
+#                             updateLog.append(f"Failed to create {filename} - {traceback.format_exc()}")
+#                     else:
+#                         updateLog.append(f"Extract {filename} -> {fullname}")
+#                         try:
+#                             z.extract(filename, path=os.path.dirname(fullname))
+#                         except Exception:
+#                             updateLog.append(f"Failed to extract {filename} - {traceback.format_exc()}")
+
+#             try:
+#                 with open("assets/update_log.txt", "w") as f:
+#                     f.writelines(updateLog)
+#             except:
+#                 logger.error(traceback.format_exc())
+
+#         os.remove("update.zip")
+#     except Exception as e:
+#         logger.error(traceback.format_exc())
+
+
+# def remove_accents_lower(input_str):
+#     nfkd_form = unicodedata.normalize('NFKD', input_str)
+#     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)]).lower()
 
 
 class WindowSignals(QObject):
@@ -416,10 +416,10 @@ class Window(QMainWindow):
         self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, playerList)
         self.dockWidgets.append(playerList)
         
-        notes = TSHNotesWidget()
-        notes.setObjectName(QApplication.translate("app", "Additional Notes"))
-        self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, notes)
-        self.dockWidgets.append(notes)
+        # notes = TSHNotesWidget()
+        # notes.setObjectName(QApplication.translate("app", "Additional Notes"))
+        # self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, notes)
+        # self.dockWidgets.append(notes)
 
         self.tabifyDockWidget(self.scoreboard, self.stageWidget)
         self.tabifyDockWidget(self.scoreboard, commentary)
@@ -427,7 +427,7 @@ class Window(QMainWindow):
         #self.tabifyDockWidget(self.scoreboard, thumbnailSetting)
         self.tabifyDockWidget(self.scoreboard, playerList)
         self.tabifyDockWidget(self.scoreboard, bracket)
-        self.tabifyDockWidget(self.scoreboard, notes)
+        # self.tabifyDockWidget(self.scoreboard, notes)
         self.scoreboard.raise_()
 
         # Game
@@ -564,7 +564,7 @@ class Window(QMainWindow):
         toggleWidgets.addAction(tournamentInfo.toggleViewAction())
         toggleWidgets.addAction(playerList.toggleViewAction())
         toggleWidgets.addAction(bracket.toggleViewAction())
-        toggleWidgets.addAction(notes.toggleViewAction())
+        # toggleWidgets.addAction(notes.toggleViewAction())
 
         self.optionsBt.menu().addSeparator()
 
@@ -728,11 +728,11 @@ class Window(QMainWindow):
         action.setIcon(QIcon('assets/icons/settings.svg'))
         action.triggered.connect(lambda: self.settingsWindow.show())
 
-        self.aboutWidget = TSHAboutWidget()
-        action = self.optionsBt.menu().addAction(
-            QApplication.translate("About", "About"))
-        action.setIcon(QIcon('assets/icons/info.svg'))
-        action.triggered.connect(lambda: self.aboutWidget.show())
+        # self.aboutWidget = TSHAboutWidget()
+        # action = self.optionsBt.menu().addAction(
+        #     QApplication.translate("About", "About"))
+        # action.setIcon(QIcon('assets/icons/info.svg'))
+        # action.triggered.connect(lambda: self.aboutWidget.show())
 
         # Game Select and Scoreboard Count
         hbox = QHBoxLayout()
@@ -826,7 +826,7 @@ class Window(QMainWindow):
         # TSHScoreboardManager.instance.signals.ScoreboardAmountChanged.connect(
         #     self.ToggleTopOption)
         StateManager.Unset("completed_sets")
-        DownloadLayoutsOnBoot()
+        # DownloadLayoutsOnBoot()
 
     def SetGame(self):
         index = next((i for i in range(self.gameSelect.model().rowCount()) if self.gameSelect.itemText(i) == TSHGameAssetManager.instance.selectedGame.get(

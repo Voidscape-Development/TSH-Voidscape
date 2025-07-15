@@ -32,7 +32,7 @@ class TSHCountryHelper(QObject):
 
     def __init__(self) -> None:
         super().__init__()
-        self.UpdateCountriesFile()
+        # self.UpdateCountriesFile()
 
     def UpdateCountriesFile(self):
         class DownloaderThread(QThread):

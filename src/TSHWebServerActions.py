@@ -15,7 +15,7 @@ from .TSHBracketWidget import TSHBracketWidget
 from .TSHScoreboardWidget import TSHScoreboardWidget
 from .TSHTournamentDataProvider import TSHTournamentDataProvider
 from .TSHCommentaryWidget import TSHCommentaryWidget
-from .Helpers.TSHControllerHelper import TSHControllerHelper
+# from .Helpers.TSHControllerHelper import TSHControllerHelper
 from .Workers import Worker
 import os
 
@@ -263,11 +263,11 @@ class WebServerActions(QThread):
                 data[item_data.get("name")] = item_data
         return data
     
-    def get_controllers(self):
-        data = TSHControllerHelper.instance.controller_list
-        for key in data.keys():
-            data[key]["codename"] = key
-        return data
+    # def get_controllers(self):
+    #     data = TSHControllerHelper.instance.controller_list
+    #     for key in data.keys():
+    #         data[key]["codename"] = key
+    #     return data
 
     def swap_teams(self, scoreboard):
         self.scoreboard.GetScoreboard(scoreboard).signals.SwapTeams.emit()
