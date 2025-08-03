@@ -103,6 +103,14 @@ logger.critical("=== TSH IS STARTING ===")
 
 logger.info("QApplication successfully initialized")
 
+from contextlib import contextmanager
+@contextmanager
+def catchtime(msg = ''):
+    from time import perf_counter
+    start = perf_counter()
+    yield lambda: perf_counter() - start
+    logger.info(f'{msg} Time: {perf_counter() - start:.3f} seconds')
+
 # autopep8: off
 from .Settings.TSHSettingsWindow import TSHSettingsWindow
 # from .TSHHotkeys import TSHHotkeys
@@ -819,6 +827,7 @@ class Window(QMainWindow):
         #TSHAlertNotification.instance.UiMounted()
         TSHAssetDownloader.instance.UiMounted()
         #TSHHotkeys.instance.UiMounted(self)
+        TSHPlayerDB.webServer = self.webserver
         TSHPlayerDB.LoadDB()
 
         StateManager.ReleaseSaving()
@@ -833,7 +842,8 @@ class Window(QMainWindow):
             "name") or self.gameSelect.itemText(i) == TSHGameAssetManager.instance.selectedGame.get("codename")), None)
         if index is not None:
             self.gameSelect.setCurrentIndex(index)
-    
+            self.webserver.emit("characters", self.webserver.actions.get_characters())
+
     def Signal_GameChange(self, url):
         if url == "":
             self.gameSelect.setCurrentIndex(0)
