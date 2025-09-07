@@ -211,13 +211,13 @@ class TSHSettingsWindow(QDialog):
         #     True
         # ))
 
-        # displaySettings.append((
-        #     QApplication.translate(
-        #         "settings.show_additional", "Show Additional Info"),
-        #     "show_additional",
-        #     "checkbox",
-        #     True
-        # ))
+        displaySettings.append((
+            QApplication.translate(
+                "settings.show_additional", "Show Additional Info"),
+            "show_additional",
+            "checkbox",
+            True
+        ))
         
         self.add_setting_widget(QApplication.translate(
             "settings", "Default Display Options"), SettingsWidget("display_options", displaySettings))
