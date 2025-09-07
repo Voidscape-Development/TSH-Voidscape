@@ -1,12 +1,9 @@
-from rlcompleter import Completer
 from qtpy.QtGui import *
 from qtpy.QtWidgets import *
 from qtpy.QtCore import *
-from qtpy import uic
 from loguru import logger
 
 from .TSHScoreboardPlayerWidget import TSHScoreboardPlayerWidget
-from .Helpers.TSHBadWordFilter import TSHBadWordFilter
 from .TSHPlayerDB import TSHPlayerDB
 from .SettingsManager import SettingsManager
 from .StateManager import StateManager
@@ -70,13 +67,13 @@ class TSHCommentaryWidget(QDockWidget):
         menu.addSection("Players")
 
         self.elements = [
-            ["Real Name",              ["real_name", "real_nameLabel"],       "show_name"],
+            ["Real Name",              ["real_name"],                         "show_name"],
             ["Twitter",                ["twitter", "twitterLabel"],           "show_social"],
             ["Location",               ["locationLabel", "state", "country"], "show_location"],
             ["Characters",             ["characters"],                        "show_characters"],
-            ["Pronouns",               ["pronoun", "pronounLabel"],           "show_pronouns"],
-            # ["Controller",             ["controller", "controllerLabel"],     "show_controller"],
-            # ["Additional information", ["custom_textbox"],                    "show_additional"],
+            ["Pronouns",               ["pronoun"],                           "show_pronouns"],
+            ["Controller",             ["controller", "controllerLabel"],     "show_controller"],
+            ["Additional information", ["custom_textbox"],                    "show_additional"],
         ]
         self.elements[0][0] = QApplication.translate("app", "Real Name")
         self.elements[1][0] = QApplication.translate("app", "Twitter")
