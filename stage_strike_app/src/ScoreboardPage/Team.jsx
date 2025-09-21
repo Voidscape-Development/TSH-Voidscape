@@ -2,15 +2,17 @@ import React from "react";
 import {Checkbox, FormControlLabel, FormGroup, Paper, Stack} from "@mui/material";
 import Player from "./Player";
 import {Box} from "@mui/system";
+import {BACKEND_PORT} from "../env";
 
 export default React.forwardRef(
     /**
      * @param {Object} props
-     * @param {any} props.teamId
+     * @param {string} props.teamId
+     * @param {string|int} props.tshTeamId
      * @param {TSHTeamInfo} props.team
      * @param {React.ForwardedRef<unknown>} ref
      */
-    function Team({teamId, team}, ref) {
+    function Team({teamId, tshTeamId, team}, ref) {
 
     /**
      * @typedef {Object} TeamState
@@ -54,7 +56,7 @@ export default React.forwardRef(
         return Promise.all(
             [
                 (
-                    fetch(`http://${window.location.hostname}:5000/scoreboard1-set?` + new URLSearchParams({
+                    fetch(`http://${window.location.hostname}:${BACKEND_PORT}/scoreboard1-set?` + new URLSearchParams({
                         losers: state.inLosers,
                         team: teamId
                     }).toString())
@@ -67,8 +69,8 @@ export default React.forwardRef(
                     console.log("team update payload", body);
 
                     return fetch(
-                        `http://${window.location.hostname}:5000`
-                        + `/scoreboard1-update-team-${teamId}-${teamKey}`,
+                        `http://${window.location.hostname}:${BACKEND_PORT}`
+                        + `/scoreboard1-update-team-${tshTeamId}-${teamKey}`,
                         {
                             method: 'POST',
                             headers: {'content-type': 'application/json'},
@@ -76,14 +78,12 @@ export default React.forwardRef(
                         }
                     )
                         .then((resp) => resp.text())
-                        .then((d) => console.info(`Submitted team ${teamId} data: `, d))
+                        .then((d) => console.info(`Submitted team ${tshTeamId} data: `, d))
                         .catch(console.error);
                 })
             ]
         );
     }
-
-    const idBase = `team-${teamId}`;
 
     const playerWidgets = playersInTeam().map(([teamKey, player]) => {
         if (!(teamKey in playerRefs)) {
@@ -92,9 +92,10 @@ export default React.forwardRef(
 
         return (
             <Player
-                key={`${idBase}${String(player.id)}${player.name}`}
+                key={`${teamId}-p-${teamKey}`}
                 ref={playerRefs[teamKey]}
                 teamId={teamId}
+                teamKey={teamKey}
                 player={player}
             />
         );
@@ -113,6 +114,7 @@ export default React.forwardRef(
                 <FormControlLabel
                     control={
                         <Checkbox
+                            id={teamId + "-losers"}
                             onChange={
                                 (e) => {
                                     setState(s => ({...s, inLosers: e.target.checked}))

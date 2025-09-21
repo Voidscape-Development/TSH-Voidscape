@@ -1,7 +1,11 @@
 import os
+
 import orjson
 import traceback
-from deepdiff import DeepDiff, extract
+
+from deepdiff.helper import DELTA_VIEW
+from qtpy.QtCore import QObject, Signal
+from deepdiff import DeepDiff, Delta, extract
 from functools import partial
 import shutil
 import threading
@@ -12,13 +16,17 @@ from loguru import logger
 from .Helpers.TSHDictHelper import deep_get, deep_set, deep_unset, deep_clone
 from .SettingsManager import SettingsManager
 
+class StateManagerSignals(QObject):
+    state_big_change = Signal()
+    state_updated = Signal(dict)
 
 class StateManager:
     lastSavedState = {}
     state = {}
     saveBlocked = 0
-    webServer = None
+    signals = StateManagerSignals()
     changedKeys = []
+    deltaIndex = 0
 
     lock = threading.RLock()
     threads = []
@@ -60,19 +68,28 @@ class StateManager:
                 diff = DeepDiff(
                     StateManager.lastSavedState,
                     StateManager.state,
-                    include_paths=StateManager.changedKeys
+                    exclude_types=[type(None)],
+                    include_paths=StateManager.changedKeys,
+                    verbose_level=2, # Necessary to see values of added items.
                 )
+                delta = Delta(diff).to_flat_dicts()
+                # logger.debug(f"State diff length: {diff_count}")
+                if len(delta) > 100:
+                    StateManager.deltaIndex += 1
+                    StateManager.signals.state_big_change.emit()
+                elif len(delta) > 0:
+                    try:
+                        StateManager.deltaIndex += 1
+                        StateManager.signals.state_updated.emit({
+                            'delta_index': StateManager.deltaIndex,
+                            'delta': Delta(diff).to_flat_dicts()
+                        })
+                    except TypeError:
+                        logger.warning(f"Couldn't serialize diff. Changed Keys: {StateManager.changedKeys}")
 
                 StateManager.changedKeys = []
 
                 if len(diff) > 0:
-                    try:
-                        if StateManager.webServer is not None:
-                            StateManager.webServer.emit(
-                                'program_state', StateManager.state)
-                    except Exception as e:
-                        logger.error(traceback.format_exc())
-
                     exportThread = threading.Thread(
                         target=partial(ExportAll, ref_diff=diff))
                     StateManager.threads.append(exportThread)
@@ -85,11 +102,13 @@ class StateManager:
         try:
             with open("./out/program_state.json", 'rb') as file:
                 StateManager.state = orjson.loads(file.read())
+                StateManager.signals.state_big_change.emit()
         except FileNotFoundError:
             pass
         except Exception as e:
             logger.error(traceback.format_exc())
             StateManager.state = {}
+            StateManager.signals.state_big_change.emit()
             StateManager.SaveState()
 
     def Set(key: str, value):
