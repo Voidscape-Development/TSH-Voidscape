@@ -1,22 +1,26 @@
 import "../App.css";
-import {darkTheme} from "../themes";
 import i18n from "../i18n/config";
 import {
-    Paper, Stack
+    Paper, Stack, Tabs, Tab
 } from "@mui/material";
-import React from "react";
+import React, {useRef} from "react";
 import {Box} from "@mui/system";
 import { io } from 'socket.io-client';
 
 import './backendDataTypes';
 import CurrentSet from "./CurrentSet";
 import UpcomingSets from "./UpcomingSets";
-import {TSHStateContext, TSHCharacterContext, TSHPlayerDBContext} from "./Contexts";
+import {
+    TSHStateContext,
+    TSHCharacterContext,
+    TSHPlayerDBContext,
+    TSHCountriesContext,
+    TSHGamesContext
+} from "./Contexts";
 import {Header} from "./Header";
 import {produce as immer_produce} from "immer";
 import {applyDeltas, combineDeltas} from "../stateDelta";
 import {BACKEND_PORT} from "../env";
-
 
 /**
  * Main page for the scoreboard. This whole contraption is powered by TSH's python-side
@@ -34,21 +38,30 @@ export default function ScoreboardPage(props) {
     });
     const [characters, setCharacters] = React.useState(null);
     const [playerDb, setPlayerDb] = React.useState(null);
+    const [games, setGames] = React.useState(undefined);
+    const [countriesData, setCountriesData] = React.useState({
+        countries: {},
+        isLoaded: false,
+    });
 
-    let socket;
+    const [selectedScoreboard, setSelectedScoreboard] = React.useState(-1);
+
+    const socketRef = useRef(null);
 
     function connectToSocketIO() {
-        socket = io(`ws://${window.location.hostname}:${BACKEND_PORT}/`, {
+        socketRef.current = io(`ws://${window.location.hostname}:${BACKEND_PORT}/`, {
             transports: ['websocket', 'webtransport'],
             timeout: 5000,
             reconnectionDelay: 500,
             reconnectionDelayMax: 1500
         });
+        const socket = socketRef.current;
 
         socket.on("connect", () => {
             console.log("SocketIO connection established.");
             socket.emit("playerdb", {}, () => {console.log("TSH acked player db request")});
             socket.emit("characters", {}, () => {console.log("TSH acked characters request")});
+            socket.emit("games", {}, () => {console.log("TSH acked games request.")});
         });
 
         socket.on("program_state", data => {
@@ -56,6 +69,10 @@ export default function ScoreboardPage(props) {
             setMaxAppliedDeltaIdx(data['delta_index'])
             setReceivedDeltas(receivedDeltas.filter(d => d.deltaIdx <= data['delta_index']))
             setTshState(data['state']);
+
+            if (selectedScoreboard === -1) {
+                setSelectedScoreboard(scoreboardKeys(data['state'])?.[0] ?? 1)
+            }
         });
 
         socket.on("program_state_update", deltaMessage => {
@@ -94,6 +111,16 @@ export default function ScoreboardPage(props) {
             setCharacters(enChars);
         })
 
+        socket.on("games", data => {
+            console.log("Games data received: ", data);
+
+            Object.entries(data).forEach(([k, game]) => {
+                game.codename = k;
+            });
+
+            setGames(data);
+        });
+
         socket.on("disconnect", () => {
             console.log("SocketIO disconnected.")
             socket.connect();
@@ -103,6 +130,30 @@ export default function ScoreboardPage(props) {
             console.log(err);
             setLoadingStatus({connectionError: true})
         })
+    }
+
+    const loadCountriesFile = () => {
+        fetch(
+            `http://${window.location.hostname}:${BACKEND_PORT}/assets/data_countries.json`
+        ).then(
+            (resp) => resp.json()
+        ).then((json) => {
+             for (let key in json) {
+                 json[key].code = key;
+             }
+
+            console.log("Loaded countries json file", json);
+             setCountriesData({
+                 countries: json,
+                 isLoaded: true
+             });
+        }).catch((e) => {
+            console.error("Failed to request countries file", e);
+            setCountriesData({
+                countries: {},
+                isLoaded: true
+            });
+        });
     }
 
     React.useEffect(() => {
@@ -139,8 +190,9 @@ export default function ScoreboardPage(props) {
     React.useEffect(() => {
         window.title = `TSH ${i18n.t("scoreboard")}`;
         connectToSocketIO();
+        loadCountriesFile();
         return () => {
-           socket.close();
+           socketRef.current.close();
         };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     // Adding the deps suggested above will actually break things... we
@@ -162,22 +214,49 @@ export default function ScoreboardPage(props) {
         setLoadingStatus({isLoading: true, connectionError: false})
     }, []);
 
+    const onSelectedGameChanged = React.useCallback((newGame) => {
+        socketRef.current.emit('update_game', {codename: newGame})
+    }, []);
+
     if (!!loadingStatus.connectionError) {
         body = connectionError;
-    } else if (!tshState || !characters || !playerDb) {
+    } else if (!tshState || !characters || !playerDb || !countriesData.isLoaded) {
         body = loading;
     } else {
+
         body = (
             // Extra margin at the bottom allows for mobile users to see the bottom of the page better.
             <>
-                <Header/>
+                <Header onSelectedGameChange={onSelectedGameChanged}/>
                 <Box
                     paddingX={2}
-                    paddingY={2}
+                    paddingTop={1}
+                    paddingBottom={2}
                 >
                     <Stack gap={4} marginBottom={24}>
-                        <CurrentSet/>
-                        <UpcomingSets onSelectedSetChanged={onSelectedSetChanged}/>
+                        <Box>
+                            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                                <Tabs
+                                    sx={{width: '100%'}}
+                                    variant={"scrollable"}
+                                    onChange={(event, newValue) => setSelectedScoreboard(newValue)}
+                                    value={selectedScoreboard}
+                                >
+                                    {
+                                        scoreboardKeys(tshState).map(sbName =>
+                                            <Tab key={sbName} value={sbName} label={`Scoreboard ${sbName}`} />)
+                                    }
+                                </Tabs>
+                            </Box>
+                            <div
+                                role={"tabpanel"}
+                                id={`scoreboards-tabpanel-${selectedScoreboard}`}
+                                aria-labelledby={`scoreboards-tabpanel-${selectedScoreboard}`}
+                            >
+                                <CurrentSet scoreboardNumber={selectedScoreboard} />
+                            </div>
+                        </Box>
+                        <UpcomingSets onSelectedSetChanged={onSelectedSetChanged} scoreboardNumber={selectedScoreboard}/>
                     </Stack>
                 </Box>
             </>
@@ -190,17 +269,31 @@ export default function ScoreboardPage(props) {
                 display: "flex",
                 flexDirection: "column",
                 height: "100vh",
-                gap: darkTheme.spacing(2),
             }}
             sx={{overflow: "auto !important"}}
         >
             <TSHStateContext.Provider value={tshState}>
                 <TSHCharacterContext.Provider value={characters}>
                     <TSHPlayerDBContext.Provider value={playerDb}>
-                        {body}
+                        <TSHCountriesContext.Provider value={countriesData.countries}>
+                            <TSHGamesContext.Provider value={games}>
+                                {body}
+                            </TSHGamesContext.Provider>
+                        </TSHCountriesContext.Provider>
                     </TSHPlayerDBContext.Provider>
                 </TSHCharacterContext.Provider>
             </TSHStateContext.Provider>
         </Box>
     )
+}
+
+/** @returns {number[]} */
+const scoreboardKeys = (tshState) => {
+    if (tshState.score) {
+        return Object.keys(tshState.score)
+            .filter(k => k.match(/^\d+$/))
+            .map(k => Number.parseInt(k));
+    } else {
+        return [];
+    }
 }

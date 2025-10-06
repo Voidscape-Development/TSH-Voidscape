@@ -182,4 +182,36 @@
  * @typedef {Object.<string, TSHPlayerDbEntry>} TSHPlayerDb
  */
 
+/**
+ * @typedef {{
+ *
+ * }} TSHCountry
+ */
+
+/**
+ * @typedef {string} TSHCountryCode
+ */
+
+/**
+ * @typedef {Object.<TSHCountryCode, TSHCountry>} TSHCountries
+ */
+
+/**
+ * @typedef {{
+ *   [codename]: TSHGameInfo
+ * }} TSHGamesInfo
+ */
+
+/**
+ * @typedef {{
+ *   challonge_game_id: number,
+ *   has_stages: boolean
+ *   has_variants: boolean
+ *   locale: null | object
+ *   name: string
+ *   smashgg_game_id: number
+ *   codename: string // This one isn't in the backend responses, I add it from the key.
+ * }} TSHGameInfo
+ */
+
 export const BackendTypes = {};
