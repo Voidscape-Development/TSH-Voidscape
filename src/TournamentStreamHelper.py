@@ -362,7 +362,7 @@ class Window(QMainWindow):
         # if it thinks they're the last window being closed.
         App.setQuitOnLastWindowClosed(False)
         # These downloads wait and call processEvents() in between downloads.
-        TSHControllerHelper.instance.init()
+        # TSHControllerHelper.instance.init()
         TSHCountryHelper.instance.UpdateCountriesFile()
         DownloadLayoutsOnBoot()
         App.setQuitOnLastWindowClosed(True)

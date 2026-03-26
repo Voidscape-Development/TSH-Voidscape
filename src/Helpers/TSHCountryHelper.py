@@ -39,10 +39,6 @@ class TSHCountryHelper(QObject):
 
     def __init__(self) -> None:
         super().__init__()
-<<<<<<< HEAD
-        # self.UpdateCountriesFile()
-=======
->>>>>>> 01854219de60f1e06bad6d6e5fcb550798aab9b5
 
     def UpdateCountriesFile(self):
         url = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json'
