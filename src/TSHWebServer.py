@@ -67,6 +67,17 @@ class WebServer(QThread):
         self.host_name = "0.0.0.0"
         self.port = SettingsManager.Get("general.webserver_port", 5000)
 
+    @staticmethod
+    @app.before_request
+    def log_request():
+        logger.info(f"[FLASK] → {request.method} {request.path} from {request.remote_addr}")
+
+    @staticmethod
+    @app.after_request
+    def log_response(response):
+        logger.info(f"[FLASK] ← {request.method} {request.path} [{response.status_code}]")
+        return response
+
     @app.route('/program-state')
     def program_state():
         return WebServer.actions.program_state()
@@ -334,6 +345,15 @@ class WebServer(QThread):
     @socketio.on('current_game')
     def ws_get_current_game(message):
         WebServer.ws_emit('get_current_game', WebServer.actions.get_current_game(), json=True)
+
+    # Get match and phase names
+    @app.route('/match-names')
+    def get_match_names():
+        return WebServer.actions.get_match_names()
+
+    @socketio.on('match_names')
+    def ws_get_match_names(message):
+        WebServer.ws_emit('match_names', WebServer.actions.get_match_names(), json=True)
 
     # Get characters
     @app.route('/characters')

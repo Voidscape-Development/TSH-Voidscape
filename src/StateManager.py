@@ -43,13 +43,13 @@ class StateManager:
 
     def BlockSaving():
         StateManager.saveBlocked += 1
-        #logger.critical(
-        #    "Initial Block - Current Blocking Status: " + str(StateManager.saveBlocked))
+        logger.debug(
+            "Initial Block - Current Blocking Status: " + str(StateManager.saveBlocked))
 
     def ReleaseSaving():
         StateManager.saveBlocked -= 1
-        #logger.critical(
-        #    "Release Block - Current Blocking Status: " + str(StateManager.saveBlocked))
+        logger.debug(
+            "Release Block - Current Blocking Status: " + str(StateManager.saveBlocked))
         if StateManager.saveBlocked == 0:
             StateManager.SaveState()
 
@@ -78,7 +78,7 @@ class StateManager:
                     StateManager.lastSavedState,
                     StateManager.state,
                     exclude_types=[type(None)],
-                    include_paths=StateManager.changedKeys,
+                    include_paths=list(set(StateManager.changedKeys)),
                     verbose_level=2, # Necessary to see values of added items.
                 )
                 delta = Delta(diff).to_flat_dicts()

@@ -397,8 +397,6 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                                     widget.setCurrentIndex(tmpData[i][objName])
                                 if type(widget) == QPlainTextEdit:
                                     widget.setPlainText(tmpData[i][objName])
-                        QCoreApplication.processEvents()
-                        w.ExportPlayerImages(tmpData[i]["online_avatar"])
                         w.ExportPlayerId(tmpData[i]["id"])
                         StateManager.Set(f"{w.path}.seed", tmpData[i]["seed"])
                         StateManager.Set(f"{w.path}.city", tmpData[i]["city"])
@@ -540,9 +538,15 @@ class TSHScoreboardPlayerWidget(QGroupBox):
             if len(TSHGameAssetManager.instance.variants) <= 0:
                 for container in self.findChildren(QComboBox, "variants"):
                     container.setVisible(False)
+                for container in self.findChildren(QComboBox):
+                    if "character_color_" in container.objectName():
+                        container.setMaximumWidth(210)
             else:
                 for container in self.findChildren(QComboBox, "variants"):
                     container.setVisible(True)
+                for container in self.findChildren(QComboBox):
+                    if "character_color_" in container.objectName():
+                        container.setMaximumWidth(120)
 
         self.CharactersChanged(includeMains=True)
 
@@ -713,9 +717,15 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         if len(TSHGameAssetManager.instance.variants) <= 0:
             for container in self.findChildren(QComboBox, "variants"):
                 container.setVisible(False)
+            for container in self.findChildren(QComboBox):
+                if "character_color_" in container.objectName():
+                    container.setMaximumWidth(210)
         else:
             for container in self.findChildren(QComboBox, "variants"):
                 container.setVisible(True)
+            for container in self.findChildren(QComboBox):
+                if "character_color_" in container.objectName():
+                    container.setMaximumWidth(120)
         for c in self.character_elements:
             c[1].setModel(TSHGameAssetManager.instance.characterModel)
             c[1].setIconSize(QSize(24, 24))

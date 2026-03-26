@@ -2,6 +2,7 @@ from qtpy.QtCore import *
 from qtpy.QtWidgets import *
 from .SettingsWidget import SettingsWidget
 from ..TSHHotkeys import TSHHotkeys
+from ..Helpers.TSHVersionHelper import add_beta_label
 
 
 class TSHSettingsWindow(QDialog):
@@ -87,7 +88,7 @@ class TSHSettingsWindow(QDialog):
         
         generalSettings.append((
             QApplication.translate(
-                "settings.disable_overwrite", "Do not override existing values in local_players.csv (takes effect on next restart)"),
+                "settings.disable_overwrite", "Do not override existing values in the local player database (takes effect on next restart)"),
             "disable_overwrite",
             "checkbox",
             False
@@ -115,6 +116,15 @@ class TSHSettingsWindow(QDialog):
             "disable_controller_file_downloading",
             "checkbox",
             False
+        ))
+
+
+        generalSettings.append((
+            add_beta_label(QApplication.translate(
+                "settings.disable_individual_game_tracker", "Disables the individual game tracker (takes effect on next restart)"), "game_tracker"),
+            "disable_individual_game_tracker",
+            "checkbox",
+            True
         ))
 
         generalSettings.append((
@@ -154,6 +164,8 @@ class TSHSettingsWindow(QDialog):
             "team2_score_down": QApplication.translate("settings.hotkeys", "Team 2 score down"),
             "reset_scores": QApplication.translate("settings.hotkeys", "Reset scores"),
             "swap_teams": QApplication.translate("settings.hotkeys", "Swap teams"),
+            "refresh_phase_group": QApplication.translate("settings.hotkeys", "Refresh bracket phase groups"),
+            "limit_export": QApplication.translate("settings.hotkeys", "Toggle bracket limit export"),
         }
 
         for i, (setting, value) in enumerate(TSHHotkeys.instance.keys.items()):

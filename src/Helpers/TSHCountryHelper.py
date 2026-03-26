@@ -1,4 +1,5 @@
 import re
+import sys
 import unicodedata
 from qtpy.QtCore import *
 from qtpy.QtGui import *
@@ -9,6 +10,9 @@ import traceback
 import time
 from pathlib import Path
 
+from tqdm import tqdm
+
+from .TSHDownloadHelper import DownloadDialog, download_file
 from ..SettingsManager import SettingsManager
 from .TSHDirHelper import TSHResolve
 from .TSHDictHelper import deep_get
@@ -16,6 +20,8 @@ from ..TournamentDataProvider import TournamentDataProvider
 from .TSHLocaleHelper import TSHLocaleHelper
 import orjson
 from loguru import logger
+import countryflag
+from countryflag.core.exceptions import InvalidCountryError
 
 
 class TSHCountryHelperSignals(QObject):
@@ -33,52 +39,44 @@ class TSHCountryHelper(QObject):
 
     def __init__(self) -> None:
         super().__init__()
+<<<<<<< HEAD
         # self.UpdateCountriesFile()
+=======
+>>>>>>> 01854219de60f1e06bad6d6e5fcb550798aab9b5
 
     def UpdateCountriesFile(self):
-        class DownloaderThread(QThread):
-            def run(self):
-                out_file = Path('./assets/countries+states+cities.json')
+        url = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json'
+        out_file = Path('./assets/countries+states+cities.json')
 
-                if out_file.exists():
-                    if SettingsManager.Get("general.disable_country_file_downloading", False):
-                        logger.debug("Skipping countries file download (SETTING ENABLED)")
-                        TSHCountryHelper.LoadCountries()
-                        return
+        if out_file.exists():
+            if SettingsManager.Get("general.disable_country_file_downloading", False):
+                logger.debug("Skipping countries file download (SETTING ENABLED)")
+                TSHCountryHelper.LoadCountries()
+                return
 
-                    modtime = out_file.stat().st_mtime
-                    # Less than 12 hours since file was written to?
-                    # Skip so there aren't redundant downloads
-                    if time.time() - modtime <= (12 * 60 * 60):
-                        logger.debug("Skipping countries file download")
-                        TSHCountryHelper.LoadCountries()
-                        return
+            modtime = out_file.stat().st_mtime
+            # Less than 12 hours since file was written to?
+            # Skip so there aren't redundant downloads
+            if time.time() - modtime <= (12 * 60 * 60):
+                logger.debug("Skipping countries file download")
+                TSHCountryHelper.LoadCountries()
+                return
 
-                try:
-                    url = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json'
-                    r = requests.get(url, allow_redirects=True)
-                    tmp_file = Path('./assets/countries+states+cities.json.tmp')
+        def validate(filename):
+            with open(filename, mode='r', encoding='utf-8') as f:
+                orjson.loads(f.read())
+                return True
 
-                    with tmp_file.open(mode='wb') as f:
-                        f.write(r.content)
+        DownloadDialog(
+            url=url,
+            filename=str(out_file),
+            desc="Countries file",
+            validator=validate,
+        ).exec()
 
-                    try:
-                        # Test if downloaded JSON is valid
-                        with tmp_file.open(mode='r', encoding='utf-8') as f:
-                            orjson.loads(f.read())
-
-                        # Remove old file, overwrite with new one
-                        tmp_file.replace(out_file)
-
-                        logger.info("Countries file updated")
-                        TSHCountryHelper.LoadCountries()
-                    except:
-                        logger.error("Countries files download failed")
-                except Exception as e:
-                    logger.error(
-                        "Could not update countries+states+cities.json: "+str(e))
-        downloaderThread = DownloaderThread(self)
-        downloaderThread.start()
+        logger.info("Updating data_countries file...")
+        TSHCountryHelper.LoadCountries()
+        logger.info("data_countries file updated.")
 
     def remove_accents_lower(input_str):
         nfkd_form = unicodedata.normalize('NFKD', input_str)
@@ -88,15 +86,23 @@ class TSHCountryHelper(QObject):
         if not country_code in TSHCountryHelper.countries:
             return {}
 
-        return {
+        data = {
             "name": TSHCountryHelper.countries[country_code]["name"],
             "display_name": TSHCountryHelper.countries[country_code]["display_name"],
             "en_name": TSHCountryHelper.countries[country_code]["en_name"],
             "code": TSHCountryHelper.countries[country_code]["code"],
             "latitude": TSHCountryHelper.countries[country_code]["latitude"],
             "longitude": TSHCountryHelper.countries[country_code]["longitude"],
-            "asset": f'./assets/country_flag/{country_code.lower()}.png'
+            "asset": f'./assets/country_flag/{country_code.lower()}.png',
         }
+    
+        try:
+            data["emoji"] = countryflag.getflag(TSHCountryHelper.countries[country_code]["code"])
+        except InvalidCountryError:
+            logger.warning(f'The following country could not be found in the countryflag library: {TSHCountryHelper.countries[country_code]["code"]}')
+            data["emoji"] = None
+        
+        return data
 
     def LoadCountries():
         try:
