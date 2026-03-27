@@ -74,7 +74,7 @@ class TSHCommentaryWidget(QDockWidget):
             [QApplication.translate("app", "Location"),               ["locationLabel", "state", "country"], "show_location"],
             [QApplication.translate("app", "Characters"),             ["characters"],                        "show_characters"],
             [QApplication.translate("app", "Pronouns"),               ["pronoun"],                           "show_pronouns"],
-            [QApplication.translate("app", "Controller"),             ["controller", "controllerLabel"],     "show_controller"],
+            # [QApplication.translate("app", "Controller"),             ["controller", "controllerLabel"],     "show_controller"],
             [QApplication.translate("app", "Additional information"), ["custom_textbox"],                    "show_additional"],
         ]
         for element in self.elements:
