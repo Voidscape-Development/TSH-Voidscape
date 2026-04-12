@@ -565,64 +565,10 @@ class TSHScoreboardWidget(QWidget):
 
         # Add default and user tournament phase title files
         self.scoreColumn.findChild(QComboBox, "phase").addItem("")
-
-        for key in TSHLocaleHelper.phaseNames.keys():
-            phaseString = TSHLocaleHelper.phaseNames[key]
-
-            if "{0}" in phaseString:
-                if "top" not in key:
-                    for letter in ["A", "B", "C", "D"]:
-                        if self.scoreColumn.findChild(QComboBox, "phase").findText(phaseString.format(letter)) < 0:
-                            self.scoreColumn.findChild(QComboBox, "phase").addItem(
-                                phaseString.format(letter))
-            else:
-                if self.scoreColumn.findChild(QComboBox, "phase").findText(phaseString) < 0:
-                    self.scoreColumn.findChild(
-                        QComboBox, "phase").addItem(phaseString)
+        TSHLocaleHelper.LoadPhaseNamesToWidget(self.scoreColumn.findChild(QComboBox, "phase"))
 
         self.scoreColumn.findChild(QComboBox, "match").addItem("")
-
-        for key in TSHLocaleHelper.matchNames.keys():
-            matchString = TSHLocaleHelper.matchNames[key]
-
-            try:
-                if "{0}" in matchString and ("qualifier" in key):
-                    # Generate preset qualifier names
-                    couples = [
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(8), TSHLocaleHelper.matchNames.get("qualifier_winners_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(16), TSHLocaleHelper.matchNames.get("qualifier_winners_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(32), TSHLocaleHelper.matchNames.get("qualifier_winners_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(6), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(8), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(12), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(16), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(24), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator")),
-                        (TSHLocaleHelper.phaseNames.get("top_n").format(32), TSHLocaleHelper.matchNames.get("qualifier_losers_indicator"))
-                    ]
-
-                    for couple in couples:
-                        print(couple)
-                        self.scoreColumn.findChild(
-                            QComboBox, "match").addItem(matchString.format(*couple))
-                elif "{0}" in matchString and ("qualifier" not in key):
-                    for number in range(5):
-                        if key == "best_of":
-                            if self.scoreColumn.findChild(QComboBox, "match").findText(matchString.format(str(2*number+1))) < 0:
-                                self.scoreColumn.findChild(QComboBox, "match").addItem(
-                                    matchString.format(str(2*number+1)))
-                        else:
-                            if self.scoreColumn.findChild(QComboBox, "match").findText(matchString.format(str(number+1))) < 0:
-                                self.scoreColumn.findChild(QComboBox, "match").addItem(
-                                    matchString.format(str(number+1)))
-                elif "indicator" in key:
-                    pass
-                else:
-                    if self.scoreColumn.findChild(QComboBox, "match").findText(matchString) < 0:
-                        self.scoreColumn.findChild(
-                            QComboBox, "match").addItem(matchString)
-            except:
-                logger.error(
-                    f"Unable to generate match strings for {matchString}")
+        TSHLocaleHelper.LoadMatchNamesToWidget(self.scoreColumn.findChild(QComboBox, "match"))
 
         TSHGameAssetManager.instance.signals.onLoad.connect(
             lambda: [
@@ -1233,6 +1179,11 @@ class TSHScoreboardWidget(QWidget):
                                          self.team2playerWidgets]
                         if self.teamsSwapped:
                             teamInstances.reverse()
+
+                        if t >= len(teamInstances):
+                            logger.warning(f"Entrant team index {t} out of range (max {len(teamInstances)})")
+                            break
+
                         teamInstance = teamInstances[t]
 
                         if len(team) > 1:
@@ -1247,6 +1198,9 @@ class TSHScoreboardWidget(QWidget):
                                 QLineEdit, "teamName").editingFinished.emit()
 
                         for p, player in enumerate(team):
+                            if p >= len(teamInstance):
+                                logger.warning(f"Player index {p} out of range for team {t+1} (max {len(teamInstance)})")
+                                break
                             if data.get("overwrite"):
                                 teamInstance[p].SetData(player, False, True, data.get(
                                     "no_mains") if data.get("no_mains") != None else False)
@@ -1274,7 +1228,16 @@ class TSHScoreboardWidget(QWidget):
 
                     teamInstances = [self.team1playerWidgets,
                                      self.team2playerWidgets]
+
+                    if team >= len(teamInstances):
+                        logger.warning(f"Team index {team+1} out of range (max {len(teamInstances)})")
+                        return
+
                     teamInstance = teamInstances[team]
+
+                    if player >= len(teamInstance):
+                        logger.warning(f"Player index {player+1} out of range for team {team+1} (max {len(teamInstance)})")
+                        return
 
                     teamInstance[player].SetData(
                         data.get("data"), False, False)
@@ -1329,6 +1292,14 @@ class TSHScoreboardWidget(QWidget):
         if self.teamsSwapped:
             teamInstances.reverse()
 
+        if team >= len(teamInstances):
+            logger.warning(f"Team index {team+1} out of range in LoadPlayerFromTag")
+            return False
+
+        if player >= len(teamInstances[team]):
+            logger.warning(f"Player index {player+1} out of range in LoadPlayerFromTag")
+            return False
+
         playerData = TSHPlayerDB.GetPlayerFromTag(tag)
         if playerData:
             teamInstances[team][player].SetData(
@@ -1341,7 +1312,7 @@ class TSHScoreboardWidget(QWidget):
             players, characters = StateManager.Get(f'game.defaults.players_per_team', 1), StateManager.Get(f'game.defaults.characters_per_player', 1)
         else:
             players, characters = 1, 1
-        # print(players, "players", characters, "characters")
+        logger.info(f"{players} players, {characters} characters")
         self.playerNumber.setValue(players)
         self.charNumber.setValue(characters)
 

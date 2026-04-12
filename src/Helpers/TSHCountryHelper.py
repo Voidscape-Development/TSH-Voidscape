@@ -4,7 +4,6 @@ import unicodedata
 from qtpy.QtCore import *
 from qtpy.QtGui import *
 from qtpy.QtWidgets import *
-import requests
 import os
 import traceback
 import time
@@ -95,7 +94,7 @@ class TSHCountryHelper(QObject):
         try:
             data["emoji"] = countryflag.getflag(TSHCountryHelper.countries[country_code]["code"])
         except InvalidCountryError:
-            logger.warning(f'The following country could not be found in the countryflag library: {TSHCountryHelper.countries[country_code]["code"]}')
+            # logger.warning(f'The following country could not be found in the countryflag library: {TSHCountryHelper.countries[country_code]["code"]}')
             data["emoji"] = None
         
         return data
