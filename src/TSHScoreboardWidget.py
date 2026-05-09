@@ -496,6 +496,9 @@ class TSHScoreboardWidget(QWidget):
             c.lineEdit().editingFinished.emit()
             c.lineEdit().setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+        self.colorMenu1.setVisible(StateManager.Get(f"game.has_colors", False))
+        self.colorMenu2.setVisible(StateManager.Get(f"game.has_colors", False))
+
         # Add stage order widget
         self.individualGameTracker = TSHIndividualGameTracker(self.scoreboardNumber)
         self.individualGameTracker.signals.stageResultsUpdate.connect(self.StageResultsToScore)
@@ -1087,6 +1090,10 @@ class TSHScoreboardWidget(QWidget):
     # Modifies the current set data. Does not check for id, so do not call this with data that may lead to another hbox incident
     def ChangeSetData(self, data):
         StateManager.BlockSaving()
+
+        StateManager.Set(f"score.{self.scoreboardNumber}.phase_size", data.get("numSeeds"))
+        StateManager.Set(f"score.{self.scoreboardNumber}.num_groups", data.get("groupCount"))
+        StateManager.Set(f"score.{self.scoreboardNumber}.round", data.get("round"))
 
         try:
             round_name = data.get("round_name")
