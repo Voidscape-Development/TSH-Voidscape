@@ -315,7 +315,7 @@ class TSHScoreboardWidget(QWidget):
 
         self.remoteScoreboardLabel = QApplication.translate(
                 "app", "Open {0} in a browser to edit the scoreboard remotely."
-            ).format(f"<a href='http://{self.GetIP()}:{SettingsManager.Get('general.webserver_port', 5000)}/scoreboard'>http://{self.GetIP()}:{SettingsManager.Get('general.webserver_port', 5000)}/scoreboard</a>")
+            ).format(f"<a href='http://{self.GetIP()}:{SettingsManager.Get('general.webserver_port', 5500)}/scoreboard'>http://{self.GetIP()}:{SettingsManager.Get('general.webserver_port', 5500)}/scoreboard</a>")
         self.remoteScoreboardLabel = add_beta_label(self.remoteScoreboardLabel, "web_score")
         self.remoteScoreboardLabel = QLabel(self.remoteScoreboardLabel)
 
@@ -684,12 +684,20 @@ class TSHScoreboardWidget(QWidget):
             self.btSelectSet.setText(
                 QApplication.translate("app", "Load set from {0}").format(TSHTournamentDataProvider.instance.provider.url))
             self.btSelectSet.setEnabled(True)
-            if self.scoreboardNumber <= 1 and not SettingsManager.Get("general.hide_track_player", True):
-                self.btLoadPlayerSet.setEnabled(True)
+            self.btLoadStationSet.setEnabled(True)
+            # btLoadPlayerSet is only constructed for the first scoreboard
+            # (see __init__: gated on scoreboardNumber <= 1 and hide_track_player).
+            # Mirror that guard here before any provider-specific tweaks.
+            if self.scoreboardNumber <= 1 and not SettingsManager.Get("general.hide_track_player", False):
+                if TSHTournamentDataProvider.instance.provider.name == "StartGG":
+                    self.btLoadPlayerSet.setEnabled(True)
+                elif TSHTournamentDataProvider.instance.provider.name == "ParryGG":
+                    self.btLoadPlayerSet.setEnabled(False)
         else:
             self.btSelectSet.setText(
                 QApplication.translate("app", "Load set"))
             self.btSelectSet.setEnabled(False)
+            self.btLoadStationSet.setEnabled(False)
 
     def SetCharacterNumber(self, value):
         # logger.info(f"TSHScoreboardWidget#SetCharacterNumber({value})")
