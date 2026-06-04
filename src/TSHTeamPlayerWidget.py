@@ -125,6 +125,11 @@ class TSHTeamPlayerWidget(QGroupBox):
             )
             c.currentIndexChanged.emit(0)
         
+        self.findChild(QCheckBox, "dead").toggled.connect(
+            lambda state, element=c: [
+                self.ExportEliminatedStatus()
+        ])
+        
         self.dynamicSpinner.valueChanged.connect(self.instanceSignals.dynamicSpinner_changed.emit)
         self.dynamicSpinner.valueChanged.connect(self.SpinnerHandling)
 
@@ -158,6 +163,7 @@ class TSHTeamPlayerWidget(QGroupBox):
         self.pronoun_model.setStringList(self.pronoun_list)
 
         self.ToggleSponsorDisplay()
+        self.SetEliminatedStatus()
 
     def GetIndex(self):
         return self.index
@@ -180,7 +186,11 @@ class TSHTeamPlayerWidget(QGroupBox):
     
     def SetDefaultSpinnerValue(self, value: int):
         self.defaultSpinnerValue = value
-        self.dynamicSpinner.setMaximum(value)
+        if self.battleMode is TSHTeamBattleModeEnum.STOCK_POOL:
+            self.dynamicSpinner.setMaximum(value)
+        elif self.battleMode is TSHTeamBattleModeEnum.FIRST_TO:
+            self.dynamicSpinner.setMaximum(value)
+            # self.dynamicSpinner.setMaximum(99)
         self.ResetDynamicSpinner()
     
     # Changes based on battle mode
@@ -205,12 +215,12 @@ class TSHTeamPlayerWidget(QGroupBox):
         self.ExportActiveStatus()
         return
     
-    def IsDead(self):
+    def IsEliminated(self):
         return self.findChild(QCheckBox, "dead").isChecked()
     
-    def SetDeathStatus(self, status: bool):
+    def SetEliminatedStatus(self, status: bool = False):
         self.findChild(QCheckBox, "dead").setChecked(status)
-        self.ExportDeathStatus()
+        self.ExportEliminatedStatus()
         return
     
     def SpinnerHandling(self):
@@ -218,9 +228,9 @@ class TSHTeamPlayerWidget(QGroupBox):
         StateManager.Set(f"{self.path}.dynamic_spinner", value.value())
         if self.battleMode is TSHTeamBattleModeEnum.STOCK_POOL:
             if value.value() <= 0:
-                self.SetDeathStatus(True)
+                self.SetEliminatedStatus(True)
             else:
-                self.SetDeathStatus(False)
+                self.SetEliminatedStatus(False)
 
         elif self.battleMode is TSHTeamBattleModeEnum.FIRST_TO:
             if value.value() >= self.defaultSpinnerValue:
@@ -260,7 +270,7 @@ class TSHTeamPlayerWidget(QGroupBox):
         StateManager.Set(f"{self.path}.active", self.findChild(QCheckBox, "activePlayer").isChecked())
         return
     
-    def ExportDeathStatus(self):
+    def ExportEliminatedStatus(self):
         StateManager.Set(f"{self.path}.dead", self.findChild(QCheckBox, "dead").isChecked())
         return
     
@@ -366,7 +376,7 @@ class TSHTeamPlayerWidget(QGroupBox):
                 
             TSHSponsorHelper.ExportValidSponsors(team, self.path)
 
-    def ExportPlayerCity(self, city=None):
+    def ExportPlayerCity(self, city=""):
         with self.dataLock:
             if StateManager.Get(f"{self.path}.city") != city:
                 StateManager.Set(
@@ -396,8 +406,6 @@ class TSHTeamPlayerWidget(QGroupBox):
                             f"{w.path}.online_avatar")
                         data["id"] = StateManager.Get(
                             f"{w.path}.id")
-                        data["seed"] = StateManager.Get(
-                            f"{w.path}.seed")
                         data["city"] = StateManager.Get(
                             f"{w.path}.city")
                         tmpData.append(data)
@@ -417,7 +425,6 @@ class TSHTeamPlayerWidget(QGroupBox):
                         QCoreApplication.processEvents()
                         w.ExportPlayerImages(tmpData[i]["online_avatar"])
                         # w.ExportPlayerId(tmpData[i]["id"])
-                        StateManager.Set(f"{w.path}.seed", tmpData[i]["seed"])
                         StateManager.Set(f"{w.path}.city", tmpData[i]["city"])
         finally:
             StateManager.ReleaseSaving()
@@ -789,7 +796,7 @@ class TSHTeamPlayerWidget(QGroupBox):
             #     self.ExportPlayerId(data.get("id"))
 
             if data.get("city"):
-                self.ExportPlayerCity(data.get("city"))
+                self.ExportPlayerCity(data.get("city", ""))
 
             twitter = self.findChild(QWidget, "twitter")
             if data.get("twitter") and data.get("twitter") != twitter.text():
@@ -911,7 +918,7 @@ class TSHTeamPlayerWidget(QGroupBox):
                                 variant_element.setCurrentIndex(variantIndex)
 
             if data.get("city"):
-                StateManager.Set(f"{self.path}.city", data.get("city"))
+                StateManager.Set(f"{self.path}.city", data.get("city", ""))
         finally:
             StateManager.ReleaseSaving()
             self.dataLock.release()

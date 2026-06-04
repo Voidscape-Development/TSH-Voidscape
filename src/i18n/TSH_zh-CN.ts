@@ -44,7 +44,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHBracket.ui" line="64"/>
         <source>Phase</source>
-        <translation>赛段</translation>
+        <translation>阶段</translation>
     </message>
     <message>
         <location filename="../layout/TSHBracket.ui" line="100"/>
@@ -54,12 +54,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHBracket.ui" line="38"/>
         <source>Phase Group</source>
-        <translation>赛段分组</translation>
+        <translation>阶段分组</translation>
     </message>
     <message>
         <location filename="../layout/TSHBracket.ui" line="51"/>
         <source>Limit exported bracket</source>
-        <translation>限制导出对阵表</translation>
+        <translation>限制对阵表最大名次信息导出</translation>
     </message>
     <message>
         <location filename="../layout/TSHBracket.ui" line="141"/>
@@ -69,7 +69,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHBracket.ui" line="144"/>
         <source>Top </source>
-        <translation>前</translation>
+        <translation>前 </translation>
     </message>
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="17"/>
@@ -100,7 +100,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="100"/>
         <source>Short Link</source>
-        <translation>短链接</translation>
+        <translation>链接</translation>
     </message>
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="124"/>
@@ -120,7 +120,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="150"/>
         <source>Tournament Icon</source>
-        <translation>赛事图标（Logo）</translation>
+        <translation>赛事图标</translation>
     </message>
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="183"/>
@@ -130,7 +130,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="190"/>
         <source>Download tournament icon</source>
-        <translation>下载赛事图标（Logo)</translation>
+        <translation>下载赛事图标</translation>
     </message>
     <message>
         <location filename="../layout/TSHTournamentInfo.ui" line="197"/>
@@ -141,15 +141,15 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Form</name>
     <message>
-        <location filename="../layout/TSHThumbnailSettings.ui" line="14"/>
+        <location filename="../layout/TSHScoreboardPlayer.ui" line="25"/>
         <location filename="../layout/TSHTeamPlayer.ui" line="25"/>
+        <location filename="../layout/TSHThumbnailSettings.ui" line="14"/>
+        <location filename="../layout/TSHBattleTeam.ui" line="26"/>
         <location filename="../layout/TSHScoreboardScore.ui" line="20"/>
         <location filename="../layout/TSHScoreboardTeam.ui" line="20"/>
-        <location filename="../layout/TSHBattleTeam.ui" line="26"/>
-        <location filename="../layout/TSHScoreboardPlayer.ui" line="25"/>
         <location filename="../layout/TSHScoreboardStage.ui" line="14"/>
         <source>Form</source>
-        <translation>窗体</translation>
+        <translation>界面</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="245"/>
@@ -167,61 +167,61 @@ p, li { white-space: pre-wrap; }
         <translation>真实姓名</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="141"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="90"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="141"/>
         <source>Region</source>
         <translation>国家</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="165"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="114"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="165"/>
         <source>Country</source>
         <translation>地区</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="194"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="211"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="194"/>
         <source>TWITTER</source>
         <translation>推特（X）</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="212"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="232"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="212"/>
         <source>Handle Only</source>
         <translation>不带@输入</translation>
     </message>
     <message>
         <location filename="../layout/TSHTeamPlayer.ui" line="260"/>
         <source>Eliminated</source>
-        <translation type="unfinished"></translation>
+        <translation>已淘汰</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="117"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="66"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="117"/>
         <source>LOCATION</source>
         <translation>所在地</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="230"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="326"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="230"/>
         <source>Pronouns</source>
-        <translation>人称代词</translation>
+        <translation>代词</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="89"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="341"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="89"/>
         <source>CHARACTERS</source>
         <translation>角色</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="62"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="170"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="62"/>
         <source>Sponsor</source>
         <translation>赞助商</translation>
     </message>
     <message>
-        <location filename="../layout/TSHTeamPlayer.ui" line="74"/>
         <location filename="../layout/TSHScoreboardPlayer.ui" line="182"/>
+        <location filename="../layout/TSHTeamPlayer.ui" line="74"/>
         <source>GamerTag</source>
         <translation>选手昵称</translation>
     </message>
@@ -239,12 +239,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHScoreboardScore.ui" line="58"/>
         <source>PHASE</source>
-        <translation>赛段</translation>
+        <translation>阶段</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardScore.ui" line="80"/>
         <source>Pool A, Bracket, Top 8, etc</source>
-        <translation>A组、对阵表、8强等</translation>
+        <translation>A组池子、对阵表、8强等</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardScore.ui" line="97"/>
@@ -269,7 +269,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHScoreboardScore.ui" line="215"/>
         <source>SWAP TEAMS</source>
-        <translation>交换团队位置</translation>
+        <translation>交换位置</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="45"/>
@@ -289,38 +289,38 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="164"/>
         <source>Neutral stages</source>
-        <translation>初始地图</translation>
+        <translation>起始地图</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="250"/>
         <source>Counterpick stages</source>
-        <translation>反制地图</translation>
+        <translation>反选地图</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="271"/>
         <location filename="../layout/TSHScoreboardStage.ui" line="290"/>
         <source>DSR</source>
-        <translation>双图重置规则</translation>
+        <translation>DSR</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="277"/>
         <source>No DSR</source>
-        <translation>不启用双图重置规则</translation>
+        <translation>NO DSR（可重复选择已赢的图）</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="300"/>
         <source>MDSR</source>
-        <translation>改良版双图重置规则</translation>
+        <translation>MDSR（禁止最后获胜的地图）</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="313"/>
         <source>Stage striking</source>
-        <translation>选图禁选流程（Ban图流程）</translation>
+        <translation>地图禁选流程</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="321"/>
         <source>Strike order, numbers separated by comma (game 1)</source>
-        <translation>第一局禁选顺序</translation>
+        <translation>首局禁选顺序（用逗号分隔）</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="334"/>
@@ -330,12 +330,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="345"/>
         <source>Fixed ban count (how many stages winner bans)</source>
-        <translation>固定禁选数量(胜者禁选地图数)</translation>
+        <translation>固定禁图数量(胜者每次禁几张)</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="362"/>
         <source>Ban count by max games (games:bans,games:bans)</source>
-        <translation>按最大局数设置禁选数（对局数:禁选数，对局数:禁用数）</translation>
+        <translation>按局数设置禁图数量（对局数：禁图数，对局数：禁图数）</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardStage.ui" line="378"/>
@@ -370,14 +370,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHScoreboardTeam.ui" line="57"/>
         <source>TEAM</source>
-        <translation>团队</translation>
+        <translation>队伍</translation>
     </message>
     <message>
         <location filename="../TSHPlayerListSlotWidget.py" line="31"/>
-        <location filename="../layout/TSHScoreboardTeam.ui" line="73"/>
         <location filename="../layout/TSHBattleTeam.ui" line="60"/>
+        <location filename="../layout/TSHScoreboardTeam.ui" line="73"/>
         <source>Team Name</source>
-        <translation>团队名称</translation>
+        <translation>队伍名称</translation>
     </message>
     <message>
         <location filename="../layout/TSHScoreboardTeam.ui" line="100"/>
@@ -402,7 +402,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="101"/>
         <source>Main</source>
-        <translation>主要的</translation>
+        <translation>中间</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="154"/>
@@ -432,7 +432,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="346"/>
         <source>Separators</source>
-        <translation>分隔符</translation>
+        <translation>分隔线</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="366"/>
@@ -447,27 +447,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="449"/>
         <source>Display</source>
-        <translation>禁用</translation>
+        <translation>显示可见开关</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="456"/>
         <source>Phase name?</source>
-        <translation>赛段名称？</translation>
+        <translation>阶段名称</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="466"/>
         <source>Teams names?</source>
-        <translation>团队名称？</translation>
+        <translation>队伍名称</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="476"/>
         <source>Sponsors?</source>
-        <translation>赞助商？</translation>
+        <translation>赞助商名称</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="504"/>
         <source>Tag font</source>
-        <translation>标签字体</translation>
+        <translation>昵称字体</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="525"/>
@@ -479,19 +479,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../layout/TSHThumbnailSettings.ui" line="549"/>
         <location filename="../layout/TSHThumbnailSettings.ui" line="729"/>
         <source>Font Type</source>
-        <translation>字体类型</translation>
+        <translation>样式</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="574"/>
         <location filename="../layout/TSHThumbnailSettings.ui" line="754"/>
         <source>Font Color</source>
-        <translation>字体颜色</translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="599"/>
         <location filename="../layout/TSHThumbnailSettings.ui" line="779"/>
         <source>Font Outline</source>
-        <translation>字体轮廓</translation>
+        <translation>描边</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="648"/>
@@ -501,7 +501,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="684"/>
         <source>Phase font</source>
-        <translation>赛段字体</translation>
+        <translation>阶段字体</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="834"/>
@@ -521,17 +521,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="882"/>
         <source>Smooth scaling</source>
-        <translation>平滑扩展</translation>
+        <translation>平滑缩放</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="889"/>
         <source>Flip P1 assets?</source>
-        <translation>是否翻转P1资源？</translation>
+        <translation>翻转P1资源</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="899"/>
         <source>Flip P2 assets?</source>
-        <translation>是否翻转P2资源？</translation>
+        <translation>翻转P2资源</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="924"/>
@@ -574,12 +574,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="1049"/>
         <source>Invert separator orientation</source>
-        <translation>反转分隔符方向</translation>
+        <translation>反转分隔线</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="1056"/>
         <source>Hide separators between characters</source>
-        <translation>隐藏角色间分隔符</translation>
+        <translation>隐藏角色间分隔线</translation>
     </message>
     <message>
         <location filename="../layout/TSHThumbnailSettings.ui" line="1068"/>
@@ -654,67 +654,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GroupBox</name>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="23"/>
         <location filename="../layout/TSHCommentator.ui" line="29"/>
+        <location filename="../layout/TSHCommentary.ui" line="23"/>
         <source>GroupBox</source>
         <translation>分组框</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="26"/>
         <location filename="../layout/TSHCommentator.ui" line="32"/>
+        <location filename="../layout/TSHCommentary.ui" line="26"/>
         <source>Commentator 1</source>
         <translation>1号解说</translation>
     </message>
     <message>
         <location filename="../layout/TSHCommentary.ui" line="47"/>
         <source>TEAM/NAME</source>
-        <translation>团队/名称</translation>
+        <translation>队伍/名称</translation>
     </message>
     <message>
         <location filename="../layout/TSHCommentary.ui" line="74"/>
         <source>Team</source>
-        <translation>团队</translation>
+        <translation>队伍</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="90"/>
         <location filename="../layout/TSHCommentator.ui" line="90"/>
+        <location filename="../layout/TSHCommentary.ui" line="90"/>
         <source>GamerTag</source>
         <translation>选手昵称</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="108"/>
         <location filename="../layout/TSHCommentator.ui" line="108"/>
+        <location filename="../layout/TSHCommentary.ui" line="108"/>
         <source>REAL NAME</source>
         <translation>真实姓名</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="124"/>
         <location filename="../layout/TSHCommentator.ui" line="124"/>
+        <location filename="../layout/TSHCommentary.ui" line="124"/>
         <source>Real Name</source>
         <translation>真实姓名</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="140"/>
         <location filename="../layout/TSHCommentator.ui" line="140"/>
+        <location filename="../layout/TSHCommentary.ui" line="140"/>
         <source>TWITTER</source>
         <translation>推特(X)</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="156"/>
         <location filename="../layout/TSHCommentator.ui" line="156"/>
+        <location filename="../layout/TSHCommentary.ui" line="156"/>
         <source>Handle Only</source>
         <translation>不带@输入</translation>
     </message>
     <message>
-        <location filename="../layout/TSHCommentary.ui" line="170"/>
         <location filename="../layout/TSHCommentator.ui" line="172"/>
+        <location filename="../layout/TSHCommentary.ui" line="170"/>
         <source>PRONOUNS</source>
         <translation>代词</translation>
     </message>
     <message>
         <location filename="../layout/TSHCommentator.ui" line="47"/>
         <source>SPONSOR/TAG</source>
-        <translation>赞助商标签</translation>
+        <translation>赞助商/昵称</translation>
     </message>
     <message>
         <location filename="../layout/TSHCommentator.ui" line="74"/>
@@ -744,7 +744,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Helpers/TSHAltTextHelper.py" line="26"/>
         <source>LIVE NOW</source>
-        <translation>正在直播</translation>
+        <translation>正在直播中</translation>
     </message>
     <message>
         <location filename="../Helpers/TSHAltTextHelper.py" line="28"/>
@@ -768,12 +768,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../Helpers/TSHAltTextHelper.py" line="148"/>
         <location filename="../Helpers/TSHAltTextHelper.py" line="272"/>
         <source>Commentators:</source>
-        <translation>解说</translation>
+        <translation>解说：</translation>
     </message>
     <message>
         <location filename="../Helpers/TSHAltTextHelper.py" line="151"/>
         <source>Stream powered by TournamentStreamHelper:</source>
-        <translation>直播由TournamentStreamHelper提供</translation>
+        <translation>直播由TournamentStreamHelper提供：</translation>
     </message>
     <message>
         <location filename="../Helpers/TSHAltTextHelper.py" line="205"/>
@@ -797,18 +797,18 @@ p, li { white-space: pre-wrap; }
         <location filename="../TournamentStreamHelper.py" line="730"/>
         <location filename="../TournamentStreamHelper.py" line="1132"/>
         <source>Warning</source>
-        <translation>警告！</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="197"/>
         <source>The program will now close.</source>
-        <translation>程序即将关闭</translation>
+        <translation>程序即将关闭。</translation>
     </message>
     <message>
         <location filename="../TSHThumbnailSettingsWidget.py" line="78"/>
         <location filename="../TournamentStreamHelper.py" line="399"/>
         <source>Thumbnail Settings</source>
-        <translation>缩略图设定</translation>
+        <translation>缩略图设置</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="407"/>
@@ -871,7 +871,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../TournamentStreamHelper.py" line="980"/>
         <location filename="../TournamentStreamHelper.py" line="988"/>
         <source>Pull Latest Completed Sets from StartGG</source>
-        <translation>从StartGG拉取最新已完成对阵</translation>
+        <translation>从StartGG获取最新已完成对局</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="583"/>
@@ -885,8 +885,8 @@ p, li { white-space: pre-wrap; }
         <translation>检查更新</translation>
     </message>
     <message>
-        <location filename="../TSHAssetDownloader.py" line="79"/>
         <location filename="../TournamentStreamHelper.py" line="592"/>
+        <location filename="../TSHAssetDownloader.py" line="79"/>
         <source>Download assets</source>
         <translation>下载资源</translation>
     </message>
@@ -898,7 +898,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="603"/>
         <source>Toggle widgets</source>
-        <translation>切换组件显示</translation>
+        <translation>组件显示</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="627"/>
@@ -909,7 +909,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="632"/>
         <source>Program Language</source>
-        <translation>应用语言</translation>
+        <translation>程序语言</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="640"/>
@@ -929,13 +929,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="671"/>
         <source>Game Asset Language changed successfully.</source>
-        <translation>游戏资源语言切换成功。</translation>
+        <translation>游戏术语语言切换成功。</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="674"/>
         <location filename="../TournamentStreamHelper.py" line="705"/>
         <source>Same as program language</source>
-        <translation>与程序语言保持一致</translation>
+        <translation>与电脑语言保持一致</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="694"/>
@@ -965,7 +965,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="746"/>
         <source>Look for Help on the forum</source>
-        <translation>在论坛寻求帮助</translation>
+        <translation>在论坛中寻求帮助</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="754"/>
@@ -995,7 +995,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="878"/>
         <source>Modify Tab Name</source>
-        <translation>修改标签页名称</translation>
+        <translation>重命名计分板</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="955"/>
@@ -1030,17 +1030,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="1252"/>
         <source>Change Tab Title</source>
-        <translation>修改标签页标题</translation>
+        <translation>重命名计分板</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1257"/>
         <source>Scoreboard Number</source>
-        <translation>计分板数量</translation>
+        <translation>计分板编号</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1268"/>
         <source>Set Tab Title</source>
-        <translation>设置标题页标签</translation>
+        <translation>确认修改并保存</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1284"/>
@@ -1060,7 +1060,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="1304"/>
         <source>Open Layout Javascript File</source>
-        <translation>打开布局的Javascript文件</translation>
+        <translation>打开布局Javascript文件</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1306"/>
@@ -1090,9 +1090,9 @@ p, li { white-space: pre-wrap; }
         <translation>更新</translation>
     </message>
     <message>
+        <location filename="../TournamentStreamHelper.py" line="1169"/>
         <location filename="../TSHAssetDownloader.py" line="335"/>
         <location filename="../TSHAssetDownloader.py" line="543"/>
-        <location filename="../TournamentStreamHelper.py" line="1169"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1104,12 +1104,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="219"/>
         <source>Please ensure the layout folder or its contents aren&apos;t open in another application before closing this window.</source>
-        <translation>关闭本窗口前，请确保布局（layout）文件夹及内容未被其他程序打开</translation>
+        <translation>关闭本窗口前，请确保布局（layout）文件夹及内容未被其他应用程序打开</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1160"/>
         <source>NOTE: This will open a new tab in your browser and close TournamentStreamHelper.</source>
-        <translation>提示：此操作将在浏览器中打开新标签页，并关闭TSH。</translation>
+        <translation>提示：此操作将在浏览器中打开新标签页，并关闭此程序。</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="1184"/>
@@ -1159,7 +1159,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHAssetDownloader.py" line="196"/>
         <source>Size</source>
-        <translation>大小</translation>
+        <translation>文件大小</translation>
     </message>
     <message>
         <location filename="../TSHAssetDownloader.py" line="197"/>
@@ -1221,13 +1221,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../TSHBracketWidget.py" line="74"/>
         <location filename="../TSHPlayerListWidget.py" line="55"/>
         <source>Number of slots</source>
-        <translation>槽位数量</translation>
+        <translation>选手/队伍数量</translation>
     </message>
     <message>
         <location filename="../TSHBracketWidget.py" line="85"/>
         <location filename="../TSHPlayerListWidget.py" line="64"/>
         <source>Players per slot</source>
-        <translation>每个槽位的选手数</translation>
+        <translation>每个队伍的选手数量</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="171"/>
@@ -1235,12 +1235,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../TSHCommentaryWidget.py" line="52"/>
         <location filename="../TSHPlayerListWidget.py" line="73"/>
         <source>Characters per player</source>
-        <translation>每位选手可用角色数</translation>
+        <translation>每位选手使用的角色数量</translation>
     </message>
     <message>
         <location filename="../TSHCommentaryWidget.py" line="44"/>
         <source>Number of commentators</source>
-        <translation>解说数量</translation>
+        <translation>解说人数</translation>
     </message>
     <message>
         <location filename="../TSHPlayerListWidget.py" line="87"/>
@@ -1278,12 +1278,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../TSHScoreboardPlayerWidget.py" line="86"/>
         <location filename="../TSHScoreboardPlayerWidget.py" line="1023"/>
         <source>Save new player</source>
-        <translation>保存新选手</translation>
+        <translation>保存选手信息</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardPlayerWidget.py" line="99"/>
         <source>Delete player entry</source>
-        <translation>删除选手条目</translation>
+        <translation>删除选手信息</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardPlayerWidget.py" line="112"/>
@@ -1307,37 +1307,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="44"/>
         <source>Ruleset</source>
-        <translation>规则组</translation>
+        <translation>规则集</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="128"/>
         <source>Open {0} in a browser to stage strike.</source>
-        <translation>在浏览器中打开{0}进行场地禁选。</translation>
+        <translation>在浏览器中打开 {0} 进行场地禁选。</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="242"/>
         <source>Save new</source>
-        <translation>保存新增</translation>
+        <translation>保存新规则</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="450"/>
         <source>Number striked stages does not match the number of neutral stages. Should strike {0} more stage(s).</source>
-        <translation>已禁选地图数量与初始地图要求不匹配，还需要再禁选{0}个地图。</translation>
+        <translation>已禁选的地图数量与起始地图要求不符，还需要再禁选{0}个地图。</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="458"/>
         <source>The current ruleset is valid!</source>
-        <translation>当前规则组校验通过</translation>
+        <translation>当前规则集可用！</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardStageWidget.py" line="511"/>
         <source>The text for banByMaxGames is invalid.</source>
-        <translation>【按最大局数禁选】文本格式无效</translation>
+        <translation>按局数设置禁图的格式不正确</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="180"/>
         <source>Players per team</source>
-        <translation>每队选手数</translation>
+        <translation>每队选手数量</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="193"/>
@@ -1412,12 +1412,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHScoreboardWidget.py" line="285"/>
         <source>Track sets from a stream or station</source>
-        <translation>从直播流或者赛台追踪对局</translation>
+        <translation>自动收录直播/分台对局</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="316"/>
         <source>Open {0} in a browser to edit the scoreboard remotely.</source>
-        <translation>在浏览器中打开{0}，即可远程编辑计分板。</translation>
+        <translation>在浏览器中打开 {0} 即可远程控制计分板。</translation>
     </message>
     <message>
         <location filename="../Helpers/TSHVersionHelper.py" line="20"/>
@@ -1428,7 +1428,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../TSHScoreboardWidget.py" line="354"/>
         <location filename="../TSHScoreboardWidget.py" line="422"/>
         <source>TEAM {0}</source>
-        <translation>{0}队</translation>
+        <translation>{0}P/队</translation>
     </message>
     <message>
         <location filename="../TSHIndividualGameTracker.py" line="56"/>
@@ -1454,7 +1454,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHScoreboardWidget.py" line="659"/>
         <source>TSH - Bluesky</source>
-        <translation>TSH - Bluesky</translation>
+        <translation>TSH-Bluesky</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="665"/>
@@ -1469,17 +1469,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHScoreboardWidget.py" line="891"/>
         <source>Auto update (Set)</source>
-        <translation>自动更新对局</translation>
+        <translation>自动更新（对局）</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="895"/>
         <source>Auto update (Stream [{0}])</source>
-        <translation>自动更新（直播流【{0}】</translation>
+        <translation>自动更新（直播【{0}】）</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="899"/>
         <source>Auto update (Station [{0}])</source>
-        <translation>自动更新（赛台【{0}】</translation>
+        <translation>自动更新（赛台【{0}】）</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="902"/>
@@ -1494,12 +1494,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHScoreboardWidget.py" line="1015"/>
         <source>Load user set ({0})</source>
-        <translation>加载用户对局</translation>
+        <translation>加载用户对局（{0}）</translation>
     </message>
     <message>
         <location filename="../TSHScoreboardWidget.py" line="1019"/>
         <source>Load user set</source>
-        <translation>加载用户设置</translation>
+        <translation>加载用户对局</translation>
     </message>
     <message>
         <location filename="../TSHSelectSetWindow.py" line="15"/>
@@ -1514,7 +1514,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHSelectSetWindow.py" line="41"/>
         <source>Show complete pairs</source>
-        <translation>显示完整对战配对</translation>
+        <translation>显示完整对战配对（2人）</translation>
     </message>
     <message>
         <location filename="../TSHSelectSetWindow.py" line="96"/>
@@ -1522,8 +1522,8 @@ p, li { white-space: pre-wrap; }
         <translation>拉取对局信息中...</translation>
     </message>
     <message>
-        <location filename="../TSHSelectStationWindow.py" line="84"/>
         <location filename="../TSHSelectSetWindow.py" line="110"/>
+        <location filename="../TSHSelectStationWindow.py" line="84"/>
         <source>Stream</source>
         <translation>直播</translation>
     </message>
@@ -1534,8 +1534,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../TSHTeamBattleWidget.py" line="65"/>
+        <location filename="../TournamentStreamHelper.py" line="423"/>
         <source>Crew/Team Battle</source>
-        <translation>团队战</translation>
+        <translation>团体战</translation>
     </message>
     <message>
         <location filename="../TSHTeamBattleWidget.py" line="82"/>
@@ -1545,45 +1546,45 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHTeamBattleWidget.py" line="92"/>
         <source>Characters per Player</source>
-        <translation>选手可选角色数</translation>
+        <translation>选手使用角色数</translation>
     </message>
     <message>
         <location filename="../TSHTeamBattleWidget.py" line="103"/>
-        <location filename="../TSHTeamBattleWidget.py" line="222"/>
+        <location filename="../TSHTeamBattleWidget.py" line="256"/>
         <source>Lives/Stocks per Player</source>
-        <translation>选手开局拥有的初始命数</translation>
+        <translation>选手初始命数</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="113"/>
+        <location filename="../TSHTeamBattleWidget.py" line="114"/>
         <source>Battle Mode</source>
         <translation>对战模式</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="129"/>
+        <location filename="../TSHTeamBattleWidget.py" line="130"/>
         <location filename="../TSHSelectSetWindow.py" line="112"/>
         <source>Phase</source>
-        <translation>赛段</translation>
+        <translation>阶段</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="139"/>
+        <location filename="../TSHTeamBattleWidget.py" line="142"/>
         <location filename="../TSHSelectSetWindow.py" line="113"/>
         <source>Match</source>
-        <translation>匹配</translation>
+        <translation>对局</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="161"/>
+        <location filename="../TSHTeamBattleWidget.py" line="166"/>
         <source>Reset Player Mode Values</source>
-        <translation>重置选手信息</translation>
+        <translation>重置选手模式数值</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="163"/>
+        <location filename="../TSHTeamBattleWidget.py" line="168"/>
         <source>Reset Battle Mode</source>
         <translation>重置对战模式</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleWidget.py" line="228"/>
+        <location filename="../TSHTeamBattleWidget.py" line="261"/>
         <source>First To Amount</source>
-        <translation>先取局数</translation>
+        <translation>先胜局数</translation>
     </message>
     <message>
         <location filename="../TSHThumbnailSettingsWidget.py" line="843"/>
@@ -1603,7 +1604,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHThumbnailSettingsWidget.py" line="846"/>
         <source>Bold Italic</source>
-        <translation>粗体斜体</translation>
+        <translation>粗斜体</translation>
     </message>
     <message>
         <location filename="../TSHTournamentInfoWidget.py" line="98"/>
@@ -1635,13 +1636,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../thumbnail/main_generate_thumbnail.py" line="1184"/>
         <source>Sponsor {0}</source>
-        <translation></translation>
+        <translation>赞助商{0}</translation>
     </message>
     <message>
         <location filename="../thumbnail/main_generate_thumbnail.py" line="1231"/>
         <location filename="../thumbnail/main_generate_thumbnail.py" line="1258"/>
         <source>Team {0}</source>
-        <translation>团队 {0}</translation>
+        <translation>队伍 {0}</translation>
     </message>
     <message>
         <location filename="../TSHTournamentDataProvider.py" line="92"/>
@@ -1656,7 +1657,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHTournamentDataProvider.py" line="163"/>
         <source>Paste the tournament URL.</source>
-        <translation>粘贴赛事链接。</translation>
+        <translation>请粘贴赛事链接</translation>
     </message>
     <message>
         <location filename="../TSHTournamentDataProvider.py" line="163"/>
@@ -1696,7 +1697,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHTournamentDataProvider.py" line="240"/>
         <source>Invalid tournament data provider</source>
-        <translation>无效的赛事数据提供商</translation>
+        <translation>赛事数据提供商无效</translation>
     </message>
     <message>
         <location filename="../TSHTournamentDataProvider.py" line="245"/>
@@ -1711,7 +1712,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TSHSelectStationWindow.py" line="14"/>
         <source>Select a station</source>
-        <translation>选择对战台</translation>
+        <translation>选择赛台</translation>
     </message>
     <message>
         <location filename="../TSHSelectStationWindow.py" line="82"/>
@@ -1739,24 +1740,28 @@ p, li { white-space: pre-wrap; }
         <translation>比分</translation>
     </message>
     <message>
-        <location filename="../TSHTeamPlayerWidget.py" line="177"/>
+        <location filename="../TSHTeamPlayerWidget.py" line="183"/>
         <source>STOCKS/LIVES</source>
         <translation>生命数</translation>
     </message>
     <message>
-        <location filename="../TSHTeamPlayerWidget.py" line="179"/>
+        <location filename="../TSHTeamPlayerWidget.py" line="185"/>
         <source>GAMES WON</source>
         <translation>获胜场次</translation>
     </message>
     <message>
-        <location filename="../TSHTeamBattleModeEnum.py" line="11"/>
         <source>Stock Pool (Smash)</source>
         <translation>共享命池（大乱斗）</translation>
     </message>
     <message>
+        <location filename="../TSHTeamBattleModeEnum.py" line="11"/>
+        <source>Stock Pool (Platformers)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../TSHTeamBattleModeEnum.py" line="18"/>
         <source>First To (First To X Team Individuals)</source>
-        <translation>先胜X制【英文First to，中文简称抢几（团队单人累计）】</translation>
+        <translation>抢X制（队伍单人累计胜局）</translation>
     </message>
 </context>
 <context>
@@ -1923,7 +1928,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../LayoutOptions/TSHLayoutOptionsWindow.py" line="81"/>
         <source>Display Player Pronouns</source>
-        <translation>显示选手个人代词</translation>
+        <translation>显示选手代词</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1936,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../LayoutOptions/TSHLayoutOptionsWindow.py" line="88"/>
         <source>Display Player Seed Number</source>
-        <translation>显示选手种子位编号</translation>
+        <translation>显示选手种子位</translation>
     </message>
 </context>
 <context>
@@ -1971,7 +1976,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../LayoutOptions/TSHLayoutOptionsWindow.py" line="255"/>
         <source>Color for Team 1 Sponsor Color</source>
-        <translation>团队1赞助商颜色</translation>
+        <translation>队伍1赞助商颜色</translation>
     </message>
 </context>
 <context>
@@ -1985,14 +1990,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>punctuation</name>
     <message>
-        <location filename="../TSHSelectSetWindow.py" line="139"/>
         <location filename="../TournamentStreamHelper.py" line="963"/>
+        <location filename="../TSHSelectSetWindow.py" line="139"/>
         <source>(</source>
         <translation>（</translation>
     </message>
     <message>
-        <location filename="../TSHSelectSetWindow.py" line="140"/>
         <location filename="../TournamentStreamHelper.py" line="965"/>
+        <location filename="../TSHSelectSetWindow.py" line="140"/>
         <source>)</source>
         <translation>）</translation>
     </message>
@@ -2035,8 +2040,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Settings/SettingsWidget.py" line="29"/>
         <location filename="../LayoutOptions/LayoutOptionsWidget.py" line="31"/>
+        <location filename="../Settings/SettingsWidget.py" line="29"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -2102,7 +2107,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="66"/>
         <source>Enable score control from the stage striking app</source>
-        <translation>允许通BAN选图应用控制计分</translation>
+        <translation>允许通过BAN图应用控制比分</translation>
     </message>
 </context>
 <context>
@@ -2110,7 +2115,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="82"/>
         <source>Disable automatic set updating for the scoreboard</source>
-        <translation>禁用计分板的自动对局更新</translation>
+        <translation>禁用计分板的自动同步并更新阶段和对局信息功能</translation>
     </message>
 </context>
 <context>
@@ -2126,7 +2131,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="122"/>
         <source>Disables attempting to download the country and states file (takes effect on next restart)</source>
-        <translation>禁用下载国家/国家文件下载功能（重启后生效）</translation>
+        <translation>禁用国家/地区文件下载功能（重启后生效）</translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2155,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="106"/>
         <source>Do not override existing values in the local player database (takes effect on next restart)</source>
-        <translation>禁止覆盖本地选手数据库现有数据(重启后生效)</translation>
+        <translation>禁止覆盖本地选手信息库现有数据(重启后生效)</translation>
     </message>
 </context>
 <context>
@@ -2158,7 +2163,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="90"/>
         <source>Disable automatic score updating for the scoreboard</source>
-        <translation>禁用计分板自动比分更新</translation>
+        <translation>禁用计分板的自动比分更新功能</translation>
     </message>
 </context>
 <context>
@@ -2192,7 +2197,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="114"/>
         <source>Hide the StartGG player tracking functionality from TSH (takes effect on next restart)</source>
-        <translation>隐藏StartGG选手追踪功能(重启后生效)</translation>
+        <translation>隐藏StartGG选手跟踪功能(重启后生效)</translation>
     </message>
 </context>
 <context>
@@ -2200,27 +2205,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="176"/>
         <source>Load set</source>
-        <translation>加载组配置组</translation>
+        <translation>加载</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="177"/>
         <source>Team 1 score up</source>
-        <translation>增加团队1比分</translation>
+        <translation>增加1P/队 分数</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="178"/>
         <source>Team 1 score down</source>
-        <translation>减少团队1比分</translation>
+        <translation>减少1P/队 分数</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="179"/>
         <source>Team 2 score up</source>
-        <translation>增加团队2比分</translation>
+        <translation>增加2P/队 分数</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="180"/>
         <source>Team 2 score down</source>
-        <translation>减少团队2比分</translation>
+        <translation>减少2P/队 分数</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="181"/>
@@ -2230,12 +2235,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="182"/>
         <source>Swap teams</source>
-        <translation>互换队伍位置</translation>
+        <translation>交换位置</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="183"/>
         <source>Refresh bracket phase groups</source>
-        <translation>刷新赛段小组对阵表</translation>
+        <translation>刷新阶段小组对阵表</translation>
     </message>
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="184"/>
@@ -2285,7 +2290,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="235"/>
         <source>Show Location</source>
-        <translation>显示位置</translation>
+        <translation>显示所在地</translation>
     </message>
 </context>
 <context>
@@ -2325,7 +2330,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="147"/>
         <source>Default Color of Team 1</source>
-        <translation>团队1默认颜色</translation>
+        <translation>1P（队伍1）默认颜色</translation>
     </message>
 </context>
 <context>
@@ -2333,7 +2338,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings/TSHSettingsWindow.py" line="155"/>
         <source>Default Color of Team 2</source>
-        <translation>团队2默认颜色</translation>
+        <translation>2P（队伍2）默认颜色</translation>
     </message>
 </context>
 <context>
@@ -2357,12 +2362,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../thumbnail/main_generate_thumbnail.py" line="1367"/>
         <source>Please select a game first</source>
-        <translation>请选择一个游戏</translation>
+        <translation>请先选择一个游戏</translation>
     </message>
     <message>
         <location filename="../thumbnail/main_generate_thumbnail.py" line="1372"/>
         <source>Player {0} tag missing</source>
-        <translation>缺少选手 {0} 的标签</translation>
+        <translation>缺少选手{0}的昵称</translation>
     </message>
 </context>
 <context>
@@ -2370,7 +2375,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Helpers/TSHAltTextHelper.py" line="10"/>
         <source>Descriptive text (also known as Alt text) describes images for blind and low-vision users, and helps give context around images to everyone. As such, we highly recommend adding it to your image uploads on your websites and social media posts.</source>
-        <translation>描述文本（也叫替代文本/Alt文本）会为了盲人和低视力用户解释图像内容,也能帮助所以用户了解图像的上下文。因此,我们强烈建议你在网站和社交媒体上传图片时添加该内容。</translation>
+        <translation>描述文本（也叫替代文本/Alt文本）为了盲人和低视力用户解释图像内容,也能帮助所以用户了解图像的上下文。因此,我们强烈建议你在网站和社交媒体上传图片时添加该内容。</translation>
     </message>
 </context>
 <context>
@@ -2378,7 +2383,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../TournamentStreamHelper.py" line="236"/>
         <source>Error while backing up the layout folder:</source>
-        <translation>备份布局（layout)文件夹时出现错误</translation>
+        <translation>备份布局（layout)文件夹时出错</translation>
     </message>
     <message>
         <location filename="../TournamentStreamHelper.py" line="247"/>
