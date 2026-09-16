@@ -13,6 +13,7 @@ from .TSHGameAssetManager import TSHGameAssetManager
 # from .Helpers.TSHControllerHelper import TSHControllerHelper
 from .TSHPlayerDB import TSHPlayerDB
 from .TSHTournamentDataProvider import TSHTournamentDataProvider
+from .SettingsManager import SettingsManager
 from .Helpers.TSHDirHelper import TSHResolve
 from .Workers import Worker
 import threading
@@ -28,8 +29,6 @@ class TSHScoreboardPlayerWidgetSignals(QObject):
     player2Id_changed = Signal()
     player_seed_changed = Signal()
     dataChanged = Signal()
-    nameChanged = Signal(str)
-    characterChanged = Signal()
 
 
 class TSHScoreboardPlayerWidget(QGroupBox):
@@ -248,7 +247,6 @@ class TSHScoreboardPlayerWidget(QGroupBox):
 
             StateManager.Set(
                 f"{self.path}.character", characters)
-            self.instanceSignals.characterChanged.emit()
 
             if includeMains:
                 StateManager.Set(
@@ -295,7 +293,6 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                 f"{self.path}.mergedName", merged)
             StateManager.Set(
                 f"{self.path}.mergedOnlyName", nameOnlyMerged)
-            self.instanceSignals.nameChanged.emit(merged)
 
     def ExportPlayerImages(self, onlineAvatar=None):
         with self.dataLock:
@@ -552,8 +549,10 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         self.CharactersChanged(includeMains=True)
 
     def SwapCharacters(self, index1: int, index2: int):
-        StateManager.BlockSaving()
+        with StateManager.SaveBlock():
+            self.DoSwapCharacters(index1, index2)
 
+    def DoSwapCharacters(self, index1: int, index2: int):
         if index2 > len(self.character_elements)-1:
             index2 = 0
 
@@ -752,11 +751,14 @@ class TSHScoreboardPlayerWidget(QGroupBox):
 
     def SetData(self, data, dontLoadFromDB=False, clear=True, no_mains=False):
         self.dataLock.acquire()
-        StateManager.BlockSaving()
 
         # logger.debug(f"Setting data for {self.path}: {data}")
 
+        # BlockSaving() lives inside the try so that the finally below always
+        # releases it, even if one of the calls in between raises.
         try:
+            StateManager.BlockSaving()
+
             if clear:
                 self.Clear(no_mains=no_mains)
 
@@ -775,6 +777,8 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                     if tag == dbTag:
                         self.SetData(item, dontLoadFromDB=True,
                                      clear=False, no_mains=no_mains)
+                        if SettingsManager.Get("general.disable_overwrite", False):
+                            data = data | item
                         break
 
             # Provider-side lazy enrichment (e.g. parry → mains from a
@@ -891,8 +895,9 @@ class TSHScoreboardPlayerWidget(QGroupBox):
                                     break
                         character_element.setCurrentIndex(characterIndex)
                 elif type(data.get("mains")) == dict:
-                    mains = data.get("mains").get(
-                        TSHGameAssetManager.instance.selectedGame.get("codename"), [])
+                    game_codename = TSHGameAssetManager.instance.selectedGame.get("codename")
+                    base_game_dir = TSHGameAssetManager.instance.selectedGame.get("base_game_dir", game_codename)
+                    mains = data.get("mains").get(game_codename) or data.get("mains").get(base_game_dir) or []
 
                     for i, main in enumerate(mains):
                         if i < len(self.character_elements):
@@ -1041,7 +1046,10 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         TSHPlayerDB.DeletePlayer(tag)
 
     def Clear(self, no_mains=False):
-        StateManager.BlockSaving()
+        with StateManager.SaveBlock():
+            self.DoClear(no_mains=no_mains)
+
+    def DoClear(self, no_mains=False):
         with self.dataLock:
             for c in self.findChildren(QLineEdit):
                 if c.objectName() != "" and c.objectName() != 'qt_spinbox_lineedit':
@@ -1074,7 +1082,6 @@ class TSHScoreboardPlayerWidget(QGroupBox):
         StateManager.Unset(f"{self.path}.wins")
         StateManager.Unset(f"{self.path}.losses")
         StateManager.Unset(f"{self.path}.winPercentage")
-        StateManager.ReleaseSaving()
 
     def SetRomanizedText(self):
         name = self.findChild(QWidget, "name").text()
